@@ -1,5 +1,4 @@
 const sql = require('./db');
-
 /* Users Start*/
 
 exports.Users = function () {
@@ -20,8 +19,6 @@ exports.UserById = function (id) {
         })
     })
 };
-
-
 
 
 exports.InsertUser = function (req) {
@@ -58,11 +55,13 @@ exports.UpdateUser = function (req) {
 
 /* Category Start */
 
-exports.Category=function(){
+exports.Category=function(req){
     return new Promise(resolve=>{
+      
         sql.query("select * from categories",(err,result)=>{
            resolve(result)
         })
+    
     })
 }
 

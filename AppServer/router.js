@@ -52,6 +52,8 @@ module.exports = function (app) {
 
         app.route('/api/login')
                 .post(authController.login);
+        app.route('/api/logout')
+                .get(authController.logout);
         app.route('/api/register')
                 .post(authController.register);
 };

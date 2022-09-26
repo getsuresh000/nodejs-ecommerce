@@ -1,37 +1,69 @@
 const { response } = require('express');
 const dal = require('../models/dal');
-
+var session;
 /* Users Start */
 
 exports.Users = async function (req, res) {
+   
     let result = [];
     result = await dal.Users();
-    res.send(result);
+  session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else if(!session){
+            res.send("Please login")
+        }
+    
 };
 
 exports.UserById = async function (req, res) {
     let result = [];
     result = await dal.UserById(req.params.id);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.InsertUser = async (req, res) => {
     let result = [];
     result = await dal.InsertUser(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 
 exports.RemoveUser = async (req, res) => {
     let result = [];
     result = await dal.RemoveUser(req.params.id)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.UpdateUser = async (req, res) => {
     let result = [];
     result = await dal.UpdateUser(req)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 /* Users End*/
@@ -40,31 +72,61 @@ exports.UpdateUser = async (req, res) => {
 exports.Category=async function(req,res){
     let result=[];
     result=await dal.Category()
+    session=req.session;
+    if(session.userid){
     res.send(result);
+    }
+    else{
+        res.send("Please login")
+    }
 }
 
 exports.CategoryById = async function (req, res) {
     let result = [];
     result = await dal.CategoryById(req.params.id);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.CategoryByName = async function (req, res) {
     let result = [];
     result = await dal.CategoryByName(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.InsertCategory=async function(req,res){
     let result = [];
     result = await dal.InsertCategory(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 }
 
 exports.DeleteCategory = async (req, res) => {
     let result = [];
     result = await dal.DeleteCategory(req.params.id)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 /*Category End */
 
@@ -73,32 +135,62 @@ exports.DeleteCategory = async (req, res) => {
 exports.Products = async function (req, res) {
     let result = [];
     result = await dal.Products();
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.ProductById = async function (req, res) {
     let result = [];
     result = await dal.ProductById(req.params.id);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.InsertProduct = async (req, res) => {
     let result = [];
     result = await dal.InsertProduct(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 
 exports.RemoveProduct = async (req, res) => {
     let result = [];
     result = await dal.RemoveProduct(req.params.id)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.UpdateProduct = async (req, res) => {
     let result = [];
     result = await dal.UpdateProduct(req)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 /* Products End*/
@@ -108,26 +200,51 @@ exports.UpdateProduct = async (req, res) => {
 exports.InsertWishlist=async(req,res)=>{
     let result=[];
     result=await dal.InsertWishlist(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
+  
 
 }
 
 exports.Wishlist=async(req,res)=>{
     let result=[];
     result=await dal.Wishlist(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 }
 
 exports.RemoveWishlist = async (req, res) => {
     let result = [];
     result = await dal.RemoveWishlist(req.params.id)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.WishlistByUserId = async function (req, res) {
     let result = [];
     result = await dal.WishlistByUserId(req.params.id);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 /* wishlist end */
 
@@ -135,31 +252,62 @@ exports.WishlistByUserId = async function (req, res) {
 exports.InsertOrders=async(req,res)=>{
     let result=[];
     result=await dal.InsertOrders(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 
 }
 
 exports.RemoveOrders = async (req, res) => {
     let result = [];
     result = await dal.RemoveOrders(req.params.id)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.Orders=async(req,res)=>{
     let result=[];
     result=await dal.Orders(req);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 }
 
 exports.UpdateOrders = async (req, res) => {
     let result = [];
     result = await dal.UpdateOrders(req)
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 
 exports.OrdersById = async function (req, res) {
     let result = [];
     result = await dal.OrdersById(req.params.id);
-    res.send(result);
+    session=req.session;
+    if(session.userid){
+        res.send(result);
+        }
+        else{
+            res.send("Please login")
+        }
 };
 /*orders end */
+
