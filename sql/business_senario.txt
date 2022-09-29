@@ -1,0 +1,19 @@
+get->Users [get all users from users table]
+get->UserById [get users by id from users table]
+post->InsertUser [Insert new user into users table]
+delete->RemoveUser [remove user from users table]
+put->UpdateUser [update existing user in users table]
+
+
+get->Products [get all products from products table]
+get->ProductById [get all products from products table]
+post->InsertProduct [Insert new product into products table]
+delete->RemoveProduct [remove products from products table]
+put->UpdateProduct [update existing products in products table]
+
+get->Orders [get all Orders from Orders table]
+get->OrdersById [get all OrdersById from OrdersById table]
+post->InsertOrders [Insert new InsertOrders into InsertOrders table]
+delete->RemoveOrders [remove RemoveOrders from RemoveOrders table]
+put->UpdateOrders [update existing UpdateOrders in UpdateOrders table]
+
