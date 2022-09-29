@@ -1,5 +1,6 @@
 const { response } = require('express');
 const dal = require('../models/dal');
+const sql = require('../models/db');
 var session;
 /* Users Start */
 
@@ -207,8 +208,6 @@ exports.InsertWishlist=async(req,res)=>{
         else{
             res.send("Please login")
         }
-  
-
 }
 
 exports.Wishlist=async(req,res)=>{
@@ -311,3 +310,22 @@ exports.OrdersById = async function (req, res) {
 };
 /*orders end */
 
+
+
+exports.dashboard=(req,res)=>{
+   session=req.session;
+       
+        if(session.userid){
+            console.log(session.userid)
+        sql.query("SELECT * FROM  users WHERE id=" + session.userid, (err, rows, fields) => {
+         
+            res.send(rows);
+            res.end()
+           
+        })
+
+    }
+    else{
+        res.send("please login...")
+    }
+    }

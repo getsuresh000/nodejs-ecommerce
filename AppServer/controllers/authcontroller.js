@@ -1,6 +1,7 @@
 const sql = require('../models/db');
 const bcrypt = require("bcrypt");
 var session;
+
 exports.register = async (req, res) => {
     const salt = await bcrypt.genSalt(6);
     const password = await bcrypt.hash(req.body.password, salt);
@@ -34,9 +35,9 @@ exports.login = async (req, res) => {
         else if (result.length > 0) {
             const hashedPassword = result[0].password;
             if (await bcrypt.compare(password, hashedPassword)) {
-                session=req.session;
-        session.userid=req.body.email;
-        console.log(req.session)
+                session = req.session;
+                session.userid = result[0].id;
+                console.log(req.session)
                 res.send("welcome " + result[0].fullname)
             }
 
@@ -51,11 +52,10 @@ exports.login = async (req, res) => {
 };
 
 
-  
-  exports.logout = (req, res) => {
+
+exports.logout = (req, res) => {
     req.session.destroy();
     res.send("logout success")
-  
-    
-  };
-  
+
+
+};

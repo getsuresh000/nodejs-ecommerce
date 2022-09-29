@@ -4,8 +4,9 @@
   "description": "simple nodejs ecommerce application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "start":"node server.js",
+    "dev":"set node_env=development& nodemon server"
+     },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/getsuresh000/nodejs-ecommerce.git"

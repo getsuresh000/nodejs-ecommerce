@@ -1,0 +1,66 @@
+"insert into users (fullname, email, password, address, city, state, mobile) values(?,?,?,?,?,?,?)", [fullname, email, password, address, city, state, mobile]
+
+"select * from users where email=? ", [email]
+
+"SELECT * FROM users"
+
+"SELECT * FROM  users WHERE id=" + id
+
+"insert into users set ?", { fullname, email, password }
+
+"DELETE FROM users Where id=" + id
+
+"update users set ? where id=?", [data, id]
+
+"select * from categories"
+
+"select * from categories where id="+id
+
+"select * from categories where categoryName=?"
+
+"insert into categories set ?", { categoryName, description}
+
+"delete  from categories where id="+id
+
+"SELECT * FROM products"
+
+"SELECT * FROM  products WHERE id=" + id
+
+"insert into products set ?", { categoryId, productName, productPrice }
+
+"DELETE FROM products Where id=" + id
+
+"update products set ? where id=?", [data, id]
+
+"SELECT * FROM whislist INNER JOIN users ON whislist.userId=users.id WHERE whislist.userId="+ session.id
+
+"insert into whislist set ? ", { userId, productId }
+
+"DELETE FROM whislist Where id=" + id
+
+"SELECT * FROM  whislist WHERE userId=" + id
+
+"insert into orders set ? ", { wishlistid, orderDate,subtotal,discount,shippingFee ,total,paymentMethod,status}
+
+"DELETE FROM orders Where id=" + id
+
+"select * from orders"
+
+"update orders set ? where id=?", [data, id]
+
+"SELECT * FROM  orders WHERE id=" + id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

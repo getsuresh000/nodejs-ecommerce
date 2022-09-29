@@ -50,6 +50,9 @@ module.exports = function (app) {
                 .get(userController.OrdersById)
                 .put(userController.UpdateOrders)
 
+        app.route('/api/dashboard')
+                .get(userController.dashboard)
+
         app.route('/api/login')
                 .post(authController.login);
         app.route('/api/logout')
