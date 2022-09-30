@@ -7,14 +7,14 @@ exports.register = async (req, res) => {
     const password = await bcrypt.hash(req.body.password, salt);
     const { fullname, email, address, city, state, mobile,role } = req.body;
 
-    sql.query("insert into users (fullname, email, password, address, city, state, mobile,role) values(?,?,?,?,?,?,?,?)", [fullname, email, password, address, city, state, mobile,role], (err, result) => {
+    sql.query("insert into users (fullname, email, password, address,mobile,role) values(?,?,?,?,?,?)", [fullname, email, password, address, mobile,role], (err, result) => {
         if (err) {
             res.send("Failed registration!!!");
             console.log(err);
         }
         else {
             res.send("Successfully Registered");
-            console.log(req.body);
+            res.write(eq.body);
         }
 
     })

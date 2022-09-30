@@ -6,8 +6,6 @@ CREATE TABLE `ecom`.`users` (
   `email` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
-  `city` VARCHAR(45) NULL,
-  `state` VARCHAR(45) NULL,
   `mobile` INT NULL,
   'role' VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
