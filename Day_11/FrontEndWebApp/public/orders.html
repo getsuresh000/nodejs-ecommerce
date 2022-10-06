@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Product Catalog</title>
+        <title>Home Page</title>
         <script src="/scripts/jquery-3.2.1.min.js"></script>
         <script src="/scripts/app.js"></script>
+        
     </head>
     <body>
-     
+        <h1>My Orders</h1>
+        <hr/>
         <a href="index.html">Home</a> | <a href="list.html">Catalog</a>|<a href="login.html">SignIn</a>
         <hr/>
         <div>
-             <h2>Todays products for sale</h2>
-             <button onclick="fetchData()">Get Products</button>
-             <ul id="productList">           
-             </ul>        
-             <p id="para"></p>
+                <button onclick="fetchOrders()">Get My Orders List</button>
+                <br/>
+                <h4>Existing Orders Collection</h4>
+                <ul id="lstOrders">
+
+                </ul>
         </div>
     </body>
 </html>
