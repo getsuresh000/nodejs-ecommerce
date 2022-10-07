@@ -2,7 +2,6 @@ import express from 'express'
 import expressSession from 'express-session';
 import  cors    from 'cors';
 import router from './routes/router.js';
-
 const oneDay = 1000 * 60 * 60 * 24;
 const app=express();
 

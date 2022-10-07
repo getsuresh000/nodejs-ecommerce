@@ -1,7 +1,6 @@
 //Data Persistance using File IO with 
-
-var fs=require('fs');
-const fileName="products.json";
+import fs from 'fs';
+const fileName="./data/products.json";
 
 
 export default class FileManager{

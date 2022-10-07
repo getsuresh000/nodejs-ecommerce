@@ -50,6 +50,3 @@ export  default class ProductManager{
     }
 }
 
-
-
-
