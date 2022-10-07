@@ -1,18 +1,10 @@
-/AppServer/api
-
-/AppServer/node_modules
-
-/AppServer/app.js
-
-/AppServer/controllers/
-
-/AppServer/models
-
-/frontend
+/AppServer
+/MVCAPP1
+/MVCAPP2
 /MVCAPP3
-/Day_11/BackEndRESTAPP/node_modules
-/Day_11/FrontEndWebApp/node_modules
-/Day_12/node_modules
+/Day_11
+/Day_11
+/Day_12
 /RestWebApp/node_modules
 /FrontEndApp/node_modules
 
