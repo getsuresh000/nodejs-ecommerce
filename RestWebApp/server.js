@@ -19,6 +19,5 @@ app.use(sessionMiddlware);
 
 //REST API Route Mapping
 router(app);
-
 app.listen(8000);
 console.log("REST API server is listening on port 8000");

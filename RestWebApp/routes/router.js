@@ -12,8 +12,16 @@ export default function (app) {
     let sqlcontroller = new UserController(sqlMgr);
 
     app.get("/api/users", sqlcontroller.getAll);
-   // app.get("/api/users/:id", sqlcontroller.UserById);
+    app.get("/api/users/:id", sqlcontroller.getById);
+    app.post("/api/users",sqlcontroller.insert);
+    app.put("/api/users/:id",sqlcontroller.put);
+    app.delete("/api/users/:id",sqlcontroller.delete);
 
+    app.get("/api/products", sqlcontroller.getAll);
+    app.get("/api/products/:id", sqlcontroller.getById);
+    app.post("/api/products",sqlcontroller.insert);
+    app.put("/api/products/:id",sqlcontroller.put);
+    app.delete("/api/prducts/:id",sqlcontroller.delete);
     // let mgr=new ProductManager();
 
     //let mgr=new FileManager();

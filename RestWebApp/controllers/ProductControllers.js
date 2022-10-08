@@ -35,6 +35,6 @@ export default class UserController{
     delete=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Delete(req.params.id);
-        res.send("User deleted successfully");
+        res.send(result);
     }
 }

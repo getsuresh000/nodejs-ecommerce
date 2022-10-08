@@ -1,13 +1,13 @@
 
 import sql from './db.js';
-export default class UserManager {
+export default class ProductManager {
     constructor() {
         this.users = [];
     }
 
     getAll = function () {
         return new Promise(resolve => {
-            let command = "SELECT * FROM users";
+            let command = "SELECT * FROM products";
             sql.query(command, (err, rows) => {
                 resolve(rows);
 
@@ -20,7 +20,7 @@ export default class UserManager {
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = "SELECT * FROM  users WHERE id=" + id;
+            let command = "SELECT * FROM  products WHERE id=" + id;
             sql.query(command, (err, rows, fields) => {
                 resolve(rows);
             })
@@ -30,9 +30,9 @@ export default class UserManager {
 
     Insert = function (req) {
         return new Promise(resolve => {
-            const { fullname, email, password } = req.body;
+            const { data} = req.body;
 
-            sql.query("insert into users set ?", { fullname, email, password }, (err, rows, fields) => {
+            sql.query("insert into products set ?", [data], (err, rows, fields) => {
                 resolve(rows);
             })
 
@@ -41,19 +41,19 @@ export default class UserManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = "DELETE FROM users Where id=" + id;
+            let command = "DELETE FROM products Where id=" + id;
             sql.query(command, (err, rows, fields) => {
                 resolve(rows);
             })
         })
     }
-    Update = function (req,id) {
+    Update = function (req) {
         return new Promise(resolve => {
          
-            const [data1]= req.body;
-
+            const {data}= req.body;
+            const {id}=req.params.id;
         
-            sql.query("update users set ? where id=?",[data1,id], (err, rows,fields) => {
+            sql.query("update products set ? where id=?",[data,id], (err, rows,fields) => {
                 if (err) {
                     console.log(err);
                 }
