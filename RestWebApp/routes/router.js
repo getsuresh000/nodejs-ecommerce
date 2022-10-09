@@ -13,7 +13,8 @@ export default function (app) {
 
     app.get("/api/users", sqlcontroller.getAll);
     app.get("/api/users/:id", sqlcontroller.getById);
-    app.post("/api/users",sqlcontroller.insert);
+    app.post("/api/users/register",sqlcontroller.insert);
+    app.post("/api/users/login",sqlcontroller.login);
     app.put("/api/users/:id",sqlcontroller.put);
     app.delete("/api/users/:id",sqlcontroller.delete);
 

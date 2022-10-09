@@ -1,21 +1,26 @@
 import express from 'express'
-import expressSession from 'express-session';
+import session from 'express-session';
+
+import cookieParser from "cookie-parser";
 import  cors    from 'cors';
 import router from './routes/router.js';
-const oneDay = 1000 * 60 * 60 * 24;
 const app=express();
 
-var sessionMiddlware=expressSession({
-    secret:'cart',
+
+app.use(session({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized:true,
-    cookie: { maxAge: oneDay },
-    resave: false 
-});
+    resave: false ,
+    cookie: {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24
+      }  
+}));
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
-app.use(sessionMiddlware);
+app.use(cookieParser);
 
 //REST API Route Mapping
 router(app);

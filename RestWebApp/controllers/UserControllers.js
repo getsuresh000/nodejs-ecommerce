@@ -21,8 +21,13 @@ export default class UserController{
     insert=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Insert(req);
+        res.send("User Registered successfully");
       
-        res.send("User inserted successfully");
+    }
+    login=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.Login(req);
+      
     }
     put=async(req,res)=>{
         let result=[];
