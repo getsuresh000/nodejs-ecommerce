@@ -1,5 +1,5 @@
 
-import sql from './db.js';
+import sql from '../db/db.js';
 export default class ProductManager {
     constructor() {
         this.users = [];

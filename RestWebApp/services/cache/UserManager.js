@@ -1,5 +1,5 @@
 
-import sql from './db.js';
+import sql from '../db/db.js';
 
 export default class UserManager {
     constructor() {
@@ -33,10 +33,9 @@ export default class UserManager {
     Update = function (req,id) {
         return new Promise(resolve => {
          
-            const [data1]= req.body;
-
+            const data= req.body;
         
-            sql.query("update users set ? where id=?",[data1,id], (err, rows,fields) => {
+            sql.query("update users set ? where id=?",[data,id], (err, rows,fields) => {
                 if (err) {
                     console.log(err);
                 }

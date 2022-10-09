@@ -1,12 +1,15 @@
-/AppServer/
-/Day_11/
-
-/Day_12/
+/AppServer
+/Day_11
+/Day_12
+/FrontEndApp
+/FrontEndWebApp/node_modules
 /MVCAPP1
 /MVCAPP2
 /MVCAPP3
 /RestWebApp/node_modules
+/sql1
 /RestWebApp/controllers/productcontroller.js
-/FrontEndApp/node_modules
+/FrontEndApp
+
 
 

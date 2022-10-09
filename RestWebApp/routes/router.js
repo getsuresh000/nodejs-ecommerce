@@ -1,6 +1,6 @@
-import UserManager from '../services/db/UserManager.js';
+import UserManager from '../services/cache/UserManager.js';
 import UserController from '../controllers/UserControllers.js';
-import AuthManager from '../services/db/AuthManager.js';
+import AuthManager from '../services/cache/AuthManager.js';
 import AuthController from '../controllers/AuthControllers.js';
 
 /*
@@ -14,9 +14,15 @@ export default function (app) {
     let sqlcontroller = new UserController(sqlMgr);
     let authMgr=new AuthManager();
     let authcontroller=new AuthController(authMgr);
-    app.get("/api/users", sqlcontroller.getAll);
+
+    app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
     app.get("/api/users/logout", authcontroller.logout);
+
+    app.get("/api/users", sqlcontroller.getAll);
+    app.get("/api/users/:id", sqlcontroller.getById);
+    app.delete("/api/users/:id", sqlcontroller.delete);
+    app.put("/api/users/:id", sqlcontroller.put);
     // let mgr=new ProductManager();
 
     //let mgr=new FileManager();

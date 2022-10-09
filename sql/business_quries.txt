@@ -1,0 +1,63 @@
+use ecom;
+
+INSERT INTO `users` (`name`, `email`, `password`, `address`, `mobile`, `role`) VALUES ('Suresh', 'suresh@gmail.com', '12345', 'hyderabad', '1234567891', 'customer');
+INSERT INTO `users` (`name`, `email`, `password`, `address`, `mobile`, `role`) VALUES ('Shyam', 'shyam@gmail.com', '12345', 'hyderabad', '1234567891', 'customer');
+INSERT INTO `users` (`name`, `email`, `password`, `address`, `mobile`, `role`) VALUES ('Mahesh', 'mahesh@gmail.com', '12345', 'hyderabad', '1234567891', 'seller');
+INSERT INTO `users` (`name`, `email`, `password`, `address`, `mobile`, `role`) VALUES ('Hari', 'hari@gmail.com', '12345', 'hyderabad', '1234567891', 'vendor');
+
+SELECT * FROM users;
+
+INSERT INTO `customers` (`customer_Id`, `user_Id`) VALUES ('1', '1');
+INSERT INTO `customers` (`customer_Id`, `user_Id`) VALUES ('2', '2');
+
+INSERT INTO `ecom`.`sellers` (`seller_id`, `user_id`) VALUES ('1', '3');
+
+INSERT INTO `ecom`.`vendors` (`vendor_Id`, `user_Id`) VALUES ('1', '4');
+
+INSERT INTO `ecom`.`categories` (`category_id`, `categoryName`, `description`) VALUES ('1', 'mobile', 'smart phones');
+INSERT INTO `ecom`.`categories` (`category_id`, `categoryName`, `description`) VALUES ('2', 'watches', 'good watches');
+
+"update users set ? where id=?", [data, id]
+
+"select * from categories"
+
+"select * from categories where id="+id
+
+"select * from categories where categoryName=?"
+
+"insert into categories set ?", { categoryName, description}
+
+"delete  from categories where id="+id
+
+"SELECT * FROM products"
+
+"SELECT * FROM  products WHERE id=" + id
+
+"insert into products set ?", { categoryId, productName, productPrice }
+
+"DELETE FROM products Where id=" + id
+
+"update products set ? where id=?", [data, id]
+
+"DELETE FROM orders Where id=" + id
+
+"select * from orders"
+
+"update orders set ? where id=?", [data, id]
+
+"SELECT * FROM  orders WHERE id=" + id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

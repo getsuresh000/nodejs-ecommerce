@@ -1,5 +1,5 @@
 
-import sql from './db.js';
+import sql from '../db/db.js';
 import bcrypt from 'bcrypt';
 var session;
 
@@ -8,18 +8,25 @@ export default class AuthManager {
     Register = async function (req, res) {
         const salt = await bcrypt.genSalt(6);
         const password = await bcrypt.hash(req.body.password, salt);
-        const { name, email, address, mobile, role } = req.body;
-
-
-        sql.query("insert into users set ?", { name, email, password, address, mobile, role }, (err, rows) => {
+        const { name, address, mobile, role } = req.body;
+        const {email}=req.body;
+        sql.query("select * from users where email=? ", {email}, (async (err, result) => {
             if (err) {
-                console.log(err)
-            } else {
-                console.log(rows);
+                res.send({ err: err });
             }
-        })
-
-    }
+            else if (result.length == 0) {
+                sql.query("insert into users set ?", { name, email, password, address, mobile, role }, (err, rows) => {
+                    if (err) {
+                        return err
+                    } else {
+                        return rows;
+                    }
+                })
+            }
+            else if (result.length > 0) {
+                return "User already exists!!"
+            }
+}))}
 
     Login = async (req, res) => {
         const { email } = req.body;
