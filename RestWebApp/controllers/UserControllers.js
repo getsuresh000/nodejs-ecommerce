@@ -7,7 +7,7 @@ export default class UserController{
         this.repoManager=sqlMgr; 
 
     }
-    getAll= async(req, res)=>{  
+    getAll= async(req,res)=>{  
         let result=[];
         result=await this.repoManager.getAll();
         res.send(result); 
@@ -18,17 +18,7 @@ export default class UserController{
          res.send(result);
     }
 
-    insert=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.Insert(req);
-        res.send("User Registered successfully");
-      
-    }
-    login=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.Login(req);
-      
-    }
+
     put=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Update(req,req.params.id);
