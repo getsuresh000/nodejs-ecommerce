@@ -8,6 +8,8 @@ import CategoryManager from '../models/CategoryManagers.js';
 import CategoryController from '../controllers/CategoryControllers.js';
 import SellerManager from '../models/SellersControllers.js';
 import SellersController from '../controllers/SellersControllers.js';
+import CustomerManager from '../models/CustomerManagers.js';
+import CustomerController from '../controllers/CustomerControllers.js';
 
 export default function (app) {
 
@@ -21,6 +23,8 @@ export default function (app) {
     let categoryController=new CategoryController(catMgr);
     let sellerMgr=new SellerManager();
     let sellercontroller=new SellersController(sellerMgr);
+    let cusMgr=new CustomerManager();
+    let customercontroller=new CustomerController(cusMgr);
 
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
@@ -48,6 +52,12 @@ export default function (app) {
     app.get("/api/sellers/:id", sellercontroller.getById);
     app.delete("/api/sellers/:id", sellercontroller.delete);
     app.put("/api/sellers/:id", sellercontroller.put);
+
+    app.post("/api/customers", customercontroller.insert);
+    app.get("/api/customers", customercontroller.getAll);
+    app.get("/api/customers/:id", customercontroller.getById);
+    app.delete("/api/customers/:id", customercontroller.delete);
+    app.put("/api/customers/:id", customercontroller.put);
     // let mgr=new ProductManager();
 
     //let mgr=new FileManager();
