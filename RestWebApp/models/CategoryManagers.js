@@ -20,7 +20,7 @@ export default class CategoryManager {
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = "SELECT * FROM  categories WHERE id=" + id;
+            let command = "SELECT * FROM  categories WHERE category_id=" + id;
             sql.query(command, (err, rows, fields) => {
                 resolve(rows);
             })
@@ -30,9 +30,9 @@ export default class CategoryManager {
 
     Insert = function (req) {
         return new Promise(resolve => {
-            const { data} = req.body;
+            const  {categoryName,description} = req.body;
 
-            sql.query("insert into categories set ?", [data], (err, rows, fields) => {
+            sql.query("insert into categories set ?", {categoryName,description}, (err, rows, fields) => {
                 resolve(rows);
             })
 
@@ -41,19 +41,18 @@ export default class CategoryManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = "DELETE FROM categories Where id=" + id;
+            let command = "DELETE FROM categories Where category_id=" + id;
             sql.query(command, (err, rows, fields) => {
                 resolve(rows);
             })
         })
     }
-    Update = function (req) {
+    Update = function (req,id) {
         return new Promise(resolve => {
          
-            const {data}= req.body;
-            const {id}=req.params.id;
+            const data= req.body;
         
-            sql.query("update categories set ? where id=?",[data,id], (err, rows,fields) => {
+            sql.query("update categories set ? where category_id=?",[data,id], (err, rows,fields) => {
                 if (err) {
                     console.log(err);
                 }

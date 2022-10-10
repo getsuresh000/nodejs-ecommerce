@@ -1,16 +1,14 @@
-import UserManager from '../models/UserManager.js';
+import UserManager from '../models/UserManagers.js';
 import UserController from '../controllers/UserControllers.js';
-import AuthManager from '../models/AuthManager.js';
+import AuthManager from '../models/AuthManagers.js';
 import AuthController from '../controllers/AuthControllers.js';
-import ProductManager from '../models/ProductManager.js';
+import ProductManager from '../models/ProductManagers.js';
 import ProductController from '../controllers/ProductControllers.js';
-import CategoryManager from '../models/CategoryManager.js';
+import CategoryManager from '../models/CategoryManagers.js';
 import CategoryController from '../controllers/CategoryControllers.js';
-/*
-import productController from '../controllers/productcontroller.js';
-import ProductManager from '../services/cache/repository.js';
-import FileManager from '../services/io/iomgr.js';
-*/
+import SellerManager from '../models/SellersControllers.js';
+import SellersController from '../controllers/SellersControllers.js';
+
 export default function (app) {
 
     let sqlMgr = new UserManager();
@@ -20,7 +18,9 @@ export default function (app) {
     let proMgr=new ProductManager();
     let productcontroller=new ProductController(proMgr);
     let catMgr=new CategoryManager();
-    let CategoryController=new  CategoryController(catMgr);
+    let categoryController=new CategoryController(catMgr);
+    let sellerMgr=new SellerManager();
+    let sellercontroller=new SellersController(sellerMgr);
 
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
@@ -31,15 +31,23 @@ export default function (app) {
     app.delete("/api/users/:id", sqlcontroller.delete);
     app.put("/api/users/:id", sqlcontroller.put);
 
-    app.get("/api/category", CategoryController.getAll);
-    app.get("/api/category/:id", CategoryController.getById);
-    app.delete("/api/category/:id", CategoryController.delete);
-    app.put("/api/category/:id", CategoryController.put);
+    app.post("/api/category", categoryController.insert);
+    app.get("/api/category", categoryController.getAll);
+    app.get("/api/category/:id", categoryController.getById);
+    app.delete("/api/category/:id", categoryController.delete);
+    app.put("/api/category/:id", categoryController.put);
 
     app.get("/api/products", productcontroller.getAll);
     app.get("/api/products/:id", productcontroller.getById);
     app.delete("/api/products/:id", productcontroller.delete);
     app.put("/api/products/:id", productcontroller.put);
+
+
+    app.post("/api/sellers", sellercontroller.insert);
+    app.get("/api/sellers", sellercontroller.getAll);
+    app.get("/api/sellers/:id", sellercontroller.getById);
+    app.delete("/api/sellers/:id", sellercontroller.delete);
+    app.put("/api/sellers/:id", sellercontroller.put);
     // let mgr=new ProductManager();
 
     //let mgr=new FileManager();

@@ -152,14 +152,15 @@ CREATE TABLE `products` (
 
 DROP TABLE IF EXISTS `sellers`;
 CREATE TABLE `sellers` (
-  `seller_id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
   `gstin` varchar(45) DEFAULT NULL,
   `created_at` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`seller_id`),
+  PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `fk_sellers` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 --
 -- Table structure for table `staff`

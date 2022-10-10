@@ -33,13 +33,8 @@ export default class AuthManager {
 
         const password = req.body.password;
         sql.query("select * from users where email=? ", [email], (async (err, result) => {
-            if (err) {
-                res.send({ err: err });
-            }
-            else if (result.length == 0) {
-                res.send("User not found!!")
-            }
-            else if (result.length > 0) {
+
+            if (result.length > 0) {
                 const hashedPassword = result[0].password;
                 if (await bcrypt.compare(password, hashedPassword)) {
                     session = req.session;
