@@ -1,11 +1,10 @@
-import UserManager from '../services/cache/UserManager.js';
+import UserManager from '../models/UserManager.js';
 import UserController from '../controllers/UserControllers.js';
-import AuthManager from '../services/cache/AuthManager.js';
+import AuthManager from '../models/AuthManager.js';
 import AuthController from '../controllers/AuthControllers.js';
-import ProductManager from '../services/cache/ProductManager.js';
+import ProductManager from '../models/ProductManager.js';
 import ProductController from '../controllers/ProductControllers.js';
-import CategoryManager from '../services/cache/CategoryManager.js';
-import CategoryController from '../controllers/CategoryControllers.js';
+import CategoryManager from '../models/CategoryManager.js';
 import CategoryController from '../controllers/CategoryControllers.js';
 /*
 import productController from '../controllers/productcontroller.js';

@@ -1,4 +1,4 @@
-import Product from './models/product.js';
+import Product from './models/test.js';
 import ProductManager from './services/repository.js';
 import ProductController from './controllers/productcontroller.js';
 
