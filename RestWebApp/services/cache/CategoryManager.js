@@ -1,13 +1,13 @@
 
 import sql from '../db/db.js';
-export default class ProductManager {
+export default class CategoryManager {
     constructor() {
         this.users = [];
     }
 
     getAll = function () {
         return new Promise(resolve => {
-            let command = "SELECT * FROM products";
+            let command = "SELECT * FROM categories";
             sql.query(command, (err, rows) => {
                 resolve(rows);
 
@@ -20,7 +20,7 @@ export default class ProductManager {
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = "SELECT * FROM  products WHERE id=" + id;
+            let command = "SELECT * FROM  categories WHERE id=" + id;
             sql.query(command, (err, rows, fields) => {
                 resolve(rows);
             })
@@ -32,7 +32,7 @@ export default class ProductManager {
         return new Promise(resolve => {
             const { data} = req.body;
 
-            sql.query("insert into products set ?", [data], (err, rows, fields) => {
+            sql.query("insert into categories set ?", [data], (err, rows, fields) => {
                 resolve(rows);
             })
 
@@ -41,7 +41,7 @@ export default class ProductManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = "DELETE FROM products Where id=" + id;
+            let command = "DELETE FROM categories Where id=" + id;
             sql.query(command, (err, rows, fields) => {
                 resolve(rows);
             })
@@ -53,7 +53,7 @@ export default class ProductManager {
             const {data}= req.body;
             const {id}=req.params.id;
         
-            sql.query("update products set ? where id=?",[data,id], (err, rows,fields) => {
+            sql.query("update categories set ? where id=?",[data,id], (err, rows,fields) => {
                 if (err) {
                     console.log(err);
                 }

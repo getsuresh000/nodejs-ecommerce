@@ -1,10 +1,10 @@
 
 //Controller
-export default class ProductController{
+export default class CategoryController{
     //constructor Dependency Injection
-    constructor(proMgr){
+    constructor(catMgr){
     
-        this.repoManager=proMgr; 
+        this.repoManager=catMgr; 
 
     }
     getAll= async(req, res)=>{  
@@ -22,12 +22,12 @@ export default class ProductController{
         let result=[];
         result= await this.repoManager.Insert(req);
       
-        res.send("product inserted successfully");
+        res.send("category inserted successfully");
     }
     put=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Update(req,req.params.id);
-        res.send("product updated successfully");
+        res.send("category updated successfully");
     }
 
 
@@ -35,6 +35,6 @@ export default class ProductController{
     delete=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Delete(req.params.id);
-        res.send("product deleted successfully");
+        res.send("category deleted successfully");
     }
 }

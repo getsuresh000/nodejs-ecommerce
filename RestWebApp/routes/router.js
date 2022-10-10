@@ -2,7 +2,11 @@ import UserManager from '../services/cache/UserManager.js';
 import UserController from '../controllers/UserControllers.js';
 import AuthManager from '../services/cache/AuthManager.js';
 import AuthController from '../controllers/AuthControllers.js';
-
+import ProductManager from '../services/cache/ProductManager.js';
+import ProductController from '../controllers/ProductControllers.js';
+import CategoryManager from '../services/cache/CategoryManager.js';
+import CategoryController from '../controllers/CategoryControllers.js';
+import CategoryController from '../controllers/CategoryControllers.js';
 /*
 import productController from '../controllers/productcontroller.js';
 import ProductManager from '../services/cache/repository.js';
@@ -14,6 +18,10 @@ export default function (app) {
     let sqlcontroller = new UserController(sqlMgr);
     let authMgr=new AuthManager();
     let authcontroller=new AuthController(authMgr);
+    let proMgr=new ProductManager();
+    let productcontroller=new ProductController(proMgr);
+    let catMgr=new CategoryManager();
+    let CategoryController=new  CategoryController(catMgr);
 
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
@@ -23,6 +31,16 @@ export default function (app) {
     app.get("/api/users/:id", sqlcontroller.getById);
     app.delete("/api/users/:id", sqlcontroller.delete);
     app.put("/api/users/:id", sqlcontroller.put);
+
+    app.get("/api/category", CategoryController.getAll);
+    app.get("/api/category/:id", CategoryController.getById);
+    app.delete("/api/category/:id", CategoryController.delete);
+    app.put("/api/category/:id", CategoryController.put);
+
+    app.get("/api/products", productcontroller.getAll);
+    app.get("/api/products/:id", productcontroller.getById);
+    app.delete("/api/products/:id", productcontroller.delete);
+    app.put("/api/products/:id", productcontroller.put);
     // let mgr=new ProductManager();
 
     //let mgr=new FileManager();
