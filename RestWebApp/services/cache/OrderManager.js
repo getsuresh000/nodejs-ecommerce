@@ -1,9 +1,9 @@
-import Category from "../../models/CategoryModels.js";
+import Order from "../../models/OrdersModels.js";
 import sql from '../db/db.js';
 
-export default class CategoryManager {
+export default class OrderManager {
     constructor() {
-        this.model = new Category;
+        this.model = new Order;
     }
 
     getAll = () => {
@@ -25,7 +25,7 @@ export default class CategoryManager {
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = `SELECT * FROM  ${this.model.table_name} WHERE category_id=` + id;
+            let command = `SELECT * FROM  ${this.model.table_name} WHERE order_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -62,7 +62,7 @@ export default class CategoryManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = `DELETE FROM ${this.model.table_name} Where category_id=` + id;
+            let command = `DELETE FROM ${this.model.table_name} Where order_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -84,7 +84,7 @@ export default class CategoryManager {
             const data = req.body;
             const id = req.params.id;
 
-            sql.query(`update ${this.model.table_name} set ? where category_id=?`, [data, id], (err, rows, fields) => {
+            sql.query(`update ${this.model.table_name} set ? where order_id=?`, [data, id], (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
                 }

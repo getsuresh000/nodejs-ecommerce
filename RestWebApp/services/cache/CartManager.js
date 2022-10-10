@@ -1,9 +1,9 @@
-import Category from "../../models/CategoryModels.js";
+import Cart from "../../models/CartModels.js";
 import sql from '../db/db.js';
 
-export default class CategoryManager {
+export default class CartManager {
     constructor() {
-        this.model = new Category;
+        this.model = new Cart;
     }
 
     getAll = () => {
@@ -25,7 +25,7 @@ export default class CategoryManager {
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = `SELECT * FROM  ${this.model.table_name} WHERE category_id=` + id;
+            let command = `SELECT * FROM  ${this.model.table_name} WHERE customer_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -34,7 +34,7 @@ export default class CategoryManager {
                     resolve({ data: "data not exists" });
                 }
                 else {
-                    resolve({ data: rows });
+                    resolve({ data:rows});
                 }
 
             })
@@ -62,7 +62,7 @@ export default class CategoryManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = `DELETE FROM ${this.model.table_name} Where category_id=` + id;
+            let command = `DELETE FROM ${this.model.table_name} Where id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -84,7 +84,7 @@ export default class CategoryManager {
             const data = req.body;
             const id = req.params.id;
 
-            sql.query(`update ${this.model.table_name} set ? where category_id=?`, [data, id], (err, rows, fields) => {
+            sql.query(`update ${this.model.table_name} set ? where id=?`, [data, id], (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
                 }

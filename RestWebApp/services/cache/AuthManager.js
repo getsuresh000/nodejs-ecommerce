@@ -1,16 +1,18 @@
-
+import Auth from "../models/AuthModels.js";
 import sql from '../db/db.js';
 import bcrypt from 'bcrypt';
 var session;
 
 export default class AuthManager {
-
+    constructor(){
+        this.users=new users;;
+    }
     Register = async function (req, res) {
         const salt = await bcrypt.genSalt(6);
         const password = await bcrypt.hash(req.body.password, salt);
         const { name, address, mobile, role } = req.body;
         const {email}=req.body;
-        sql.query("select * from users where email=? ", {email}, (async (err, result) => {
+        sql.query(`select * from ${this.users} where email=? `, {email}, (async (err, result) => {
             if (err) {
                 res.send({ err: err });
             }

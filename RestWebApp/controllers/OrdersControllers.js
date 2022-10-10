@@ -1,10 +1,10 @@
 
 //Controller
-export default class CategoryController{
+export default class OrderController{
     //constructor Dependency Injection
-    constructor(catMgr){
+    constructor(ordMgr){
     
-        this.repoManager=catMgr; 
+        this.repoManager=ordMgr; 
 
     }
     getAll= async(req, res)=>{  

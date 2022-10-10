@@ -84,7 +84,7 @@ var onLogin=()=>{
     let credential={};
     credential.email=email;
     credential.password=password;
-    let loginUrl="http://localhost:8000/api/login";
+    let loginUrl="http://localhost:8000/api/users/login";
     $.ajax({
         url: loginUrl,
         type:"POST",

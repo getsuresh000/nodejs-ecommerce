@@ -9,8 +9,8 @@ export default class AuthController{
     
     register=async(req,res)=>{
       let result=[];
-        result= await this.repoManager.Register(req,res);
-        res.send("Registered successfully");
+        result= await this.repoManager.Register(req);
+        res.send(result);
       
     }
     login=async(req,res)=>{

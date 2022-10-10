@@ -1,10 +1,10 @@
 
 //Controller
-export default class CategoryController{
+export default class CartController{
     //constructor Dependency Injection
-    constructor(catMgr){
+    constructor(cartMgr){
     
-        this.repoManager=catMgr; 
+        this.repoManager=cartMgr; 
 
     }
     getAll= async(req, res)=>{  
@@ -13,7 +13,7 @@ export default class CategoryController{
         res.send(result.data); 
      
     };
-     getById=async (req, res)=>{
+     getByCusId=async (req, res)=>{
         let result=[];
          result= await this.repoManager.getById(req.params.id);
          res.send(result.data);

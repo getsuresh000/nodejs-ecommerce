@@ -2,14 +2,18 @@ import UserManager from '../models/UserManagers.js';
 import UserController from '../controllers/UserControllers.js';
 import AuthManager from '../models/AuthManagers.js';
 import AuthController from '../controllers/AuthControllers.js';
-import ProductManager from '../models/ProductManagers.js';
+import ProductManager from '../services/cache/ProductManager.js';
 import ProductController from '../controllers/ProductControllers.js';
-import CategoryManager from '../models/CategoryManagers.js';
+import CategoryManager from '../services/cache/CategoryManager.js';
 import CategoryController from '../controllers/CategoryControllers.js';
 import SellerManager from '../models/SellersControllers.js';
 import SellersController from '../controllers/SellersControllers.js';
 import CustomerManager from '../models/CustomerManagers.js';
 import CustomerController from '../controllers/CustomerControllers.js';
+import OrderManager from '../services/cache/OrderManager.js';
+import OrderController from '../controllers/OrdersControllers.js';
+import CartManager from '../services/cache/CartManager.js';
+import CartController from '../controllers/CartControllers.js';
 
 export default function (app) {
 
@@ -25,6 +29,10 @@ export default function (app) {
     let sellercontroller=new SellersController(sellerMgr);
     let cusMgr=new CustomerManager();
     let customercontroller=new CustomerController(cusMgr);
+    let ordMgr=new OrderManager();
+    let ordercontroller=new OrderController(ordMgr);
+    let cartMgr=new CartManager();
+    let cartcontroller=new CartController(cartMgr);
 
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
@@ -59,6 +67,18 @@ export default function (app) {
     app.get("/api/customers/:id", customercontroller.getById);
     app.delete("/api/customers/:id", customercontroller.delete);
     app.put("/api/customers/:id", customercontroller.put);
+
+    app.post("/api/orders", ordercontroller.insert);
+    app.get("/api/orders", ordercontroller.getAll);
+    app.get("/api/orders/:id", ordercontroller.getById);
+    app.delete("/api/orders/:id", ordercontroller.delete);
+    app.put("/api/orders/:id", ordercontroller.put);
+
+    app.post("/api/cart", cartcontroller.insert);
+    app.get("/api/cart", cartcontroller.getAll);
+    app.get("/api/cart/:id", cartcontroller.getByCusId);
+    app.delete("/api/cart/:id", cartcontroller.delete);
+    app.put("/api/cart/:id", cartcontroller.put);
     // let mgr=new ProductManager();
 
     //let mgr=new FileManager();

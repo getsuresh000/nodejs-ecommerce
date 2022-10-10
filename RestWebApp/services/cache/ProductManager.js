@@ -1,28 +1,42 @@
-
+import Product from "../../models/ProductModels.js";
 import sql from '../db/db.js';
+
 export default class ProductManager {
     constructor() {
-        this.users = [];
+        this.model = new Product;
     }
 
-    getAll = function () {
-        return new Promise(resolve => {
-            let command = "SELECT * FROM products";
-            sql.query(command, (err, rows) => {
-                resolve(rows);
-
-            })
-
-        })
+    getAll = () => {
+        return new Promise((resolve) => {
+            let command = `SELECT * FROM ${this.model.table_name};`;
+            sql.query(command, (err, rows, field) => {
+                if (err) {
+                    resolve({ data: err });
+                }
+                else if (rows.length == 0) {
+                    resolve({ data: "data not exists" });
+                }
+                else {
+                    resolve({ data: rows });
+                }
+            });
+        });
     };
-
-
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = "SELECT * FROM  products WHERE id=" + id;
+            let command = `SELECT * FROM  ${this.model.table_name} WHERE category_id=` + id;
             sql.query(command, (err, rows, fields) => {
-                resolve(rows);
+                if (err) {
+                    resolve({ data: err });
+                }
+                else if (rows.length == 0) {
+                    resolve({ data: "data not exists" });
+                }
+                else {
+                    resolve({ data: rows });
+                }
+
             })
         })
     };
@@ -30,10 +44,17 @@ export default class ProductManager {
 
     Insert = function (req) {
         return new Promise(resolve => {
-            const { data} = req.body;
+            const data = req.body;
 
-            sql.query("insert into products set ?", [data], (err, rows, fields) => {
-                resolve(rows);
+            sql.query(`insert into ${this.model.table_name} set ?`, [data], (err, rows, fields) => {
+                if (err) {
+                    resolve({ data: err });
+                }
+
+                else {
+                    resolve({ data: "Inserted Successfull" });
+
+                }
             })
 
         })
@@ -41,27 +62,39 @@ export default class ProductManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = "DELETE FROM products Where id=" + id;
+            let command = `DELETE FROM ${this.model.table_name} Where category_id=` + id;
             sql.query(command, (err, rows, fields) => {
-                resolve(rows);
+                if (err) {
+                    resolve({ data: err });
+                }
+                else if (rows.affectedRows == 0) {
+                    resolve({ data: "data not exists" });
+                }
+                else {
+                    resolve({data:rows.affectedRows+ " records deleted" });
+                }
+
             })
         })
     }
+
     Update = function (req) {
         return new Promise(resolve => {
-         
-            const {data}= req.body;
-            const {id}=req.params.id;
-        
-            sql.query("update products set ? where id=?",[data,id], (err, rows,fields) => {
+
+            const data = req.body;
+            const id = req.params.id;
+
+            sql.query(`update ${this.model.table_name} set ? where category_id=?`, [data, id], (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    resolve({ data: err });
+                }
+                else if (rows.affectedRows == 0) {
+                    resolve({ data: "data not exists" });
                 }
                 else {
-                    resolve(rows);
+                    resolve({ data:rows.affectedRows+ " Updated Successfully" });
+
                 }
-
-
             })
         })
     }

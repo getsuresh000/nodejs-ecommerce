@@ -22,12 +22,12 @@ export default class ProductController{
         let result=[];
         result= await this.repoManager.Insert(req);
       
-        res.send("product inserted successfully");
+        res.send(result.data);
     }
     put=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Update(req,req.params.id);
-        res.send("product updated successfully");
+        res.send(result.data);
     }
 
 
