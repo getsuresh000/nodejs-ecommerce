@@ -12,9 +12,9 @@ export default class CustomerController{
         result=await this.repoManager.getAll();
         res.send(result); 
     };
-     getById=async (req, res)=>{
+     getByUserId=async (req, res)=>{
         let result=[];
-         result= await this.repoManager.getById(req.params.id);
+         result= await this.repoManager.getByUserId(req.params.id);
          res.send(result);
     }
 
@@ -22,7 +22,7 @@ export default class CustomerController{
         let result=[];
         result= await this.repoManager.Insert(req);
       
-        res.send("customers inserted successfully");
+        res.send(result.data);
     }
     put=async(req,res)=>{
         let result=[];

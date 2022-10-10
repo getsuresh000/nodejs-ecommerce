@@ -8,7 +8,7 @@ import CategoryManager from '../services/cache/CategoryManager.js';
 import CategoryController from '../controllers/CategoryControllers.js';
 import SellerManager from '../models/SellersControllers.js';
 import SellersController from '../controllers/SellersControllers.js';
-import CustomerManager from '../models/CustomerManagers.js';
+import CustomerManager from '../services/cache/CustomerManager.js';
 import CustomerController from '../controllers/CustomerControllers.js';
 import OrderManager from '../services/cache/OrderManager.js';
 import OrderController from '../controllers/OrdersControllers.js';
@@ -64,7 +64,7 @@ export default function (app) {
 
     app.post("/api/customers", customercontroller.insert);
     app.get("/api/customers", customercontroller.getAll);
-    app.get("/api/customers/:id", customercontroller.getById);
+    app.get("/api/customers/:id", customercontroller.getByUserId);
     app.delete("/api/customers/:id", customercontroller.delete);
     app.put("/api/customers/:id", customercontroller.put);
 
