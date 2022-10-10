@@ -50,6 +50,34 @@ var fetchProductDetails=()=>{
         .catch(() => (apiError = true));
 }
 
+var onRegister=()=>{
+  let fullname=document.getElementById("fullname").value;
+  let email=document.getElementById("email").value;
+  let password=document.getElementById("password").value;
+  let address=document.getElementById("address").value;
+  let mobile=document.getElementById("mobile").value;
+  let role=document.getElementById("role").value;
+  let credential={};
+  credential.name=fullname;
+  credential.email=email;
+  credential.password=password;
+  credential.address=address;
+  credential.mobile=mobile;
+  credential.role=role;
+  let registerUrl="http://localhost:8000/api/users/register";
+  $.ajax({
+      url: registerUrl,
+      type:"POST",
+      data:credential,
+      success: (data, status)=>{
+          console.log("on successfull login");
+          console.log(status);
+          console.log(data); 
+          alert("Registered Successfully!!!");
+      }
+  });
+}
+
 var onLogin=()=>{
     let email=document.getElementById("email").value;
     let password=document.getElementById("password").value;

@@ -41,6 +41,7 @@ export default function (app) {
     app.delete("/api/category/:id", categoryController.delete);
     app.put("/api/category/:id", categoryController.put);
 
+    app.post("/api/products", productcontroller.insert);
     app.get("/api/products", productcontroller.getAll);
     app.get("/api/products/:id", productcontroller.getById);
     app.delete("/api/products/:id", productcontroller.delete);

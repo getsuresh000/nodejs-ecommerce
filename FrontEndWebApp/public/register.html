@@ -2,13 +2,36 @@
 <html>
     <head>
         <title>Register Page</title> 
+        <script src="/scripts/jquery-3.2.1.min.js"></script>
+        <script src="/scripts/app.js"></script>
     </head>
     <body>
 
         <a href="index.html">Home</a> | <a href="list.html">Catalog</a>|<a href="login.html">SignIn</a>
         <hr/>
         <div>
-            
-        </div>
+            <div>
+                <label for="fullname">Name:</label><br>
+                <label><input size="50" type="text" id="fullname" name="fullname"/></label><br>
+                <label for="email">Email:</label><br>
+                <label><input size="50" type="email" id="email" name="email"/></label><br>
+                <label for="password">Password:</label><br>
+                <input size="50" type="password" id="password" name="password" ><br><br>
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="5" cols="33"></textarea><br>
+                <label for="mobile">Mobile:</label>
+                <input size="50" type="number" id="mobile" name="mobile"/><br><br>
+                <label for="role">Role:</label>
+                <select name="role" id="role">
+                    <option value="customer">Customer</option>
+                    <option value="seller">Seller</option>
+                    <option value="vendor">Vendor</option>
+                    <option value="staff">Staff</option>
+                </select>
+                <br><br>
+
+                <button onclick="onRegister()">Register</button>
+            </div> 
+            </div>
     </body>
 </html>

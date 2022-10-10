@@ -30,7 +30,7 @@ export default class ProductManager {
 
     Insert = function (req) {
         return new Promise(resolve => {
-            const { data} = req.body;
+            const  data = req.body;
 
             sql.query("insert into products set ?", [data], (err, rows, fields) => {
                 resolve(rows);
