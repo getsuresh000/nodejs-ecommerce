@@ -1,4 +1,4 @@
-export default class Customer{
+export default class Seller{
     //Parameterized constructor
     constructor(
        
@@ -12,7 +12,7 @@ export default class Customer{
       this.location=location;
       
   
-      this.table_name = "customers";
+      this.table_name = "sellers";
     }
   
     display() {

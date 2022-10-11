@@ -16,11 +16,12 @@ export default class AuthController{
     login=async(req,res)=>{
         let result=[];
         result= await this.repoManager.Login(req,res);
-        res.send("login successfully");
+        res.send(result);
     }
-    logout = (req, res) => {
-        req.session.destroy();
-        res.send("logout success")
+    logout = async(req, res) => {
+        let result=[];
+        result= await this.repoManager.Logout(req.params.id);
+        res.send(result);
     }
     
 }

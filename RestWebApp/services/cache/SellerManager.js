@@ -1,14 +1,14 @@
-import Cart from "../../models/CartModels.js";
+import Seller from "../../models/SellerModels.js";
 import sql from '../db/db.js';
 
-export default class CartManager {
+export default class SellerManager {
     constructor() {
-        this.model = new Cart;
+        this.model = new Seller;
     }
 
     getAll = () => {
         return new Promise((resolve) => {
-            let command = `SELECT * FROM ${this.model.table_name}`;
+            let command = `SELECT * FROM ${this.model.table_name};`;
             sql.query(command, (err, rows, field) => {
                 if (err) {
                     resolve({ data: err });
@@ -23,9 +23,9 @@ export default class CartManager {
         });
     };
 
-    getById = function (id) {
+    getByUserId = function (id) {
         return new Promise(resolve => {
-            let command = `SELECT * FROM  ${this.model.table_name} WHERE customer_id=` + id;
+            let command = `SELECT * FROM  ${this.model.table_name} WHERE user_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -34,7 +34,7 @@ export default class CartManager {
                     resolve({ data: "data not exists" });
                 }
                 else {
-                    resolve({ data:rows});
+                    resolve({ data: rows });
                 }
 
             })
@@ -62,7 +62,7 @@ export default class CartManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = `DELETE FROM ${this.model.table_name} Where id=` + id;
+            let command = `DELETE FROM ${this.model.table_name} Where user_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -84,7 +84,7 @@ export default class CartManager {
             const data = req.body;
             const id = req.params.id;
 
-            sql.query(`update ${this.model.table_name} set ? where id=?`, [data, id], (err, rows, fields) => {
+            sql.query(`update ${this.model.table_name} set ? where user_id=?`, [data, id], (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
                 }

@@ -1,12 +1,12 @@
 import UserManager from '../models/UserManagers.js';
 import UserController from '../controllers/UserControllers.js';
-import AuthManager from '../models/AuthManagers.js';
+import AuthManager from '../services/cache/AuthManager.js';
 import AuthController from '../controllers/AuthControllers.js';
 import ProductManager from '../services/cache/ProductManager.js';
 import ProductController from '../controllers/ProductControllers.js';
 import CategoryManager from '../services/cache/CategoryManager.js';
 import CategoryController from '../controllers/CategoryControllers.js';
-import SellerManager from '../models/SellersControllers.js';
+import SellerManager from '../services/cache/SellerManager.js';
 import SellersController from '../controllers/SellersControllers.js';
 import CustomerManager from '../services/cache/CustomerManager.js';
 import CustomerController from '../controllers/CustomerControllers.js';
@@ -79,20 +79,5 @@ export default function (app) {
     app.get("/api/cart/:id", cartcontroller.getByCusId);
     app.delete("/api/cart/:id", cartcontroller.delete);
     app.put("/api/cart/:id", cartcontroller.put);
-    // let mgr=new ProductManager();
-
-    //let mgr=new FileManager();
-    // constructor dependency injection
-    //   let controller=new productController(mgr);  
-
-    //Map controller callback functions for rest API routes
    
-    /*  app.post("/api/products",controller.post);
-  
-     app.get("/api/products",controller.get);
-   app.get("/api/products/id",productController.getById);
- 
-     app.put("/api/products",productController.put);
-     app.delete("/api/products",productController.delete);
-     */
 }
