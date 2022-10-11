@@ -1,7 +1,10 @@
-import UserManager from '../models/UserManagers.js';
-import UserController from '../controllers/UserControllers.js';
+
 import AuthManager from '../services/cache/AuthManager.js';
 import AuthController from '../controllers/AuthControllers.js';
+
+import UserManager from '../models/UserManagers.js';
+import UserController from '../controllers/UserControllers.js';
+
 import ProductManager from '../services/cache/ProductManager.js';
 import ProductController from '../controllers/ProductControllers.js';
 import CategoryManager from '../services/cache/CategoryManager.js';
@@ -14,13 +17,17 @@ import OrderManager from '../services/cache/OrderManager.js';
 import OrderController from '../controllers/OrdersControllers.js';
 import CartManager from '../services/cache/CartManager.js';
 import CartController from '../controllers/CartControllers.js';
+import StaffManager from '../services/cache/StaffManager.js';
+import StaffController from '../controllers/StaffControllers.js';
 
 export default function (app) {
 
-    let sqlMgr = new UserManager();
-    let sqlcontroller = new UserController(sqlMgr);
     let authMgr=new AuthManager();
     let authcontroller=new AuthController(authMgr);
+    
+    let sqlMgr = new UserManager();
+    let sqlcontroller = new UserController(sqlMgr);
+
     let proMgr=new ProductManager();
     let productcontroller=new ProductController(proMgr);
     let catMgr=new CategoryManager();
@@ -33,6 +40,8 @@ export default function (app) {
     let ordercontroller=new OrderController(ordMgr);
     let cartMgr=new CartManager();
     let cartcontroller=new CartController(cartMgr);
+    let staffMgr=new StaffManager();
+    let staffcontroller=new StaffController(staffMgr);
 
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
@@ -67,6 +76,12 @@ export default function (app) {
     app.get("/api/customers/:id", customercontroller.getByUserId);
     app.delete("/api/customers/:id", customercontroller.delete);
     app.put("/api/customers/:id", customercontroller.put);
+
+    app.post("/api/staff", staffcontroller.insert);
+    app.get("/api/staff", staffcontroller.getAll);
+    app.get("/api/staff/:id", staffcontroller.getById);
+    app.delete("/api/staff/:id", staffcontroller.delete);
+    app.put("/api/staff/:id", staffcontroller.put);
 
     app.post("/api/orders", ordercontroller.insert);
     app.get("/api/orders", ordercontroller.getAll);

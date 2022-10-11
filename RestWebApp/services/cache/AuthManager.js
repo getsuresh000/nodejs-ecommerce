@@ -1,5 +1,7 @@
 import User from "../../models/UserModels.js";
 import Customer from "../../models/CustomerModels.js";
+import Seller from "../../models/SellerModels.js";
+import Staff from "../../models/StaffModels.js";
 import sql from '../db/db.js';
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
@@ -9,6 +11,8 @@ export default class AuthManager {
     constructor(){
         this.users=new User();
         this.customers=new Customer();
+        this.sellers=new Seller();
+        this.staff=new Staff();
     }
     Register = async function (req, res) {
       
@@ -18,22 +22,18 @@ export default class AuthManager {
         
         return new Promise((resolve) => {
                 let data=req.body;
-                
-                let command=`insert into ${this.users.table_name} (email, password, role) values ("${data.email}","${password}","${data.role}") ;
-                SET userId = LAST_INSERT_ID();
-                
-                insert into ${this.customers.table_name} (user_Id,name,mobile,location) values (userId,"${data.name}","${data.mobile}","${data.location}");
-              `;
-        
-                sql.query(command, (err, rows, fields) => {
+      
+        let command=`call insert_user_customer("${data.email}","${password}","${data.name}","${data.mobile}","${data.location}")`;
+                sql.query(command,(err, rows, fields) => {
                     if (err) {
                         resolve({ error: err });
-                    } else {
+                    } else if(rows){
                         resolve({ message: "Registered Successfully" });
                     }
                 })
             })
         }
+
         Login = async (req) => {
             return  new Promise((resolve) => {
               let data = req.body;
