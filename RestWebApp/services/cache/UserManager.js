@@ -2,9 +2,7 @@
 import sql from '../db/db.js';
 
 export default class UserManager {
-    constructor() {
-        this.users = [];
-    }
+
 
     getAll = function () {
         return new Promise(resolve => {

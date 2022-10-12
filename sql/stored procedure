@@ -1,17 +1,21 @@
---Insert Customer
+-- Customer registration
 
-DELIMITER $$
-USE `ecom`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_customer`(email varchar(45),password varchar(200),name varchar(45),mobile int(20),location varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_customer`(email varchar(45),password varchar(200),role varchar(45), name varchar(45),mobile int(20),location varchar(100))
 BEGIN
-INSERT INTO ecom.users (email, password)
-  VALUES(email, password);
+INSERT INTO ecom.users (email, password,role)
+  VALUES(email, password,role);
 INSERT INTO ecom.customers (user_Id, name,mobile,location) 
   VALUES(LAST_INSERT_ID(),name, mobile,location);
-END$$
+END
 
-DELIMITER ;
-;
+-- seller registration
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_seller`(email varchar(45),password varchar(200),role varchar(50), name varchar(45),mobile int(20),location varchar(100))
+BEGIN
+INSERT INTO ecom.users (email, password,role)
+  VALUES(email, password,role);
+INSERT INTO ecom.sellers (user_Id, name,mobile,location) 
+  VALUES(LAST_INSERT_ID(),name, mobile,location);
+END
 -- FundsTransfer Query
 
 CREATE DEFINER = `root` @`localhost` PROCEDURE `FundsTransfer`(

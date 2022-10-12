@@ -2,21 +2,27 @@
 import AuthManager from '../services/cache/AuthManager.js';
 import AuthController from '../controllers/AuthControllers.js';
 
-import UserManager from '../models/UserManagers.js';
+import UserManager from '../services/cache/UserManager.js';
 import UserController from '../controllers/UserControllers.js';
 
 import ProductManager from '../services/cache/ProductManager.js';
 import ProductController from '../controllers/ProductControllers.js';
+
 import CategoryManager from '../services/cache/CategoryManager.js';
 import CategoryController from '../controllers/CategoryControllers.js';
+
 import SellerManager from '../services/cache/SellerManager.js';
 import SellersController from '../controllers/SellersControllers.js';
+
 import CustomerManager from '../services/cache/CustomerManager.js';
 import CustomerController from '../controllers/CustomerControllers.js';
+
 import OrderManager from '../services/cache/OrderManager.js';
 import OrderController from '../controllers/OrdersControllers.js';
+
 import CartManager from '../services/cache/CartManager.js';
 import CartController from '../controllers/CartControllers.js';
+
 import StaffManager from '../services/cache/StaffManager.js';
 import StaffController from '../controllers/StaffControllers.js';
 
