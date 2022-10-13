@@ -1,33 +1,136 @@
 
 //Javascript Code
 //Client Side Javascript Code
-var onRegister=()=>{
-  let fullname=document.getElementById("fullname").value;
-  let email=document.getElementById("email").value;
-  let password=document.getElementById("password").value;
-  let address=document.getElementById("address").value;
-  let mobile=document.getElementById("mobile").value;
-  let role=document.getElementById("role").value;
+//Registration
+
+$(document).on('click','#btn_register',function(e){
+  e.preventDefault();
+
+
   let credential={};
-  credential.name=fullname;
-  credential.email=email;
-  credential.password=password;
-  credential.location=address;
-  credential.mobile=mobile;
-  credential.role=role;
+  credential.name=$('#txt_username').val();
+  credential.email=$('#txt_email').val();
+  credential.password=$('#txt_password').val();
+  credential.location=$('#txt_address').val();
+  credential.mobile=$('#txt_mobile').val();
+  credential.role=$('#txt_role').val();
+
   let registerUrl="http://localhost:8000/api/users/register";
+  
   $.ajax({
       url: registerUrl,
       type:"POST",
       data:credential,
-      success: (data, status)=>{
-        alert("Registered Successfully!!!");
-          console.log(status);
-          console.log(data); 
+      success: (response)=>{
+          console.log(response.message);
+         $("#message").html(response.message);
          
       }
+      
   });
-}
+  $("#registraion_form")[0].reset();
+});
+
+
+$(document).on('click','#btn_login',function(e){
+  e.preventDefault();
+  let email=$('#txt_email').val();
+  let password=$('#txt_password').val();
+  let role=$('#txt_role').val();
+
+  let credential={};
+  credential.email=email;
+  credential.role=role;
+
+  let loginUrl="http://localhost:8000/api/users/inventory";
+ 
+  $.ajax({
+      url: loginUrl,
+      type:"POST",
+      data:credential,
+     
+      
+      success: (data,response)=>{
+         console.log(response.message);
+         localStorage.setItem("Authorization",data);
+         $("#message").html(response.userData);
+      }
+  });
+});
+
+/*
+  var onRegister=()=>{
+		
+			
+		var username = $('#txt_username').val();
+		var _email 	 = $('#txt_email').val();
+		var _password = $('#txt_password').val();
+    var _mobile=$('#txt_mobile').val();
+    var _address=$('#txt_address').val();
+		var _role=$('#txt_role').val();
+		var atpos  = email.indexOf('@');
+		var dotpos = email.lastIndexOf('.com');
+
+    
+
+		if(username == ''){
+			alert('please enter username !!'); 
+		}
+    /*
+		else if(!/^[a-z A-Z]+$/.test(username)){ 
+			alert('username only capital and small letters are allowed !!'); 
+		}
+		else if(email == ''){ 
+			alert('please enter email address !!'); 
+		}
+    
+		else if(atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length){ 
+			alert('please enter valid email address !!'); 
+		}
+		else if(password == ''){ 
+			alert('please enter password !!'); 
+		}
+		else if(password.length < 6){ 
+			alert('password must be 6 !!');
+		} 
+    if(mobile == ''){ 
+			alert('please enter mobile no !!'); 
+		}
+    if(address == ''){ 
+			alert('please enter address !!'); 
+		}
+    if(role == ''){ 
+			alert('please select role !!'); 
+		}
+    
+		else{			
+    
+			$.ajax({
+				url: 'http://localhost:8000/api/users/register',
+				type: 'post',
+				data:  {
+        
+        email:_email,
+        password:_password,
+        role:_role,
+        name:username,
+        mobile:_mobile,
+        location:_address
+       
+        },
+				success:(data,response)=>{
+          alert(response);
+          console.log(response);
+          console.log(data); 
+				}
+       
+			});
+				
+		
+		}
+	}
+*/
+
 
 var fetchData=()=>{
    // alert("button is clicked.....");
@@ -78,26 +181,6 @@ var fetchProductDetails=()=>{
 }
 
 
-
-var onLogin=()=>{
-    let email=document.getElementById("email").value;
-    let password=document.getElementById("password").value;
-    let credential={};
-    credential.email=email;
-    credential.password=password;
-    let loginUrl="http://localhost:8000/api/users/login";
-    $.ajax({
-        url: loginUrl,
-        type:"POST",
-        data:credential,
-        success: (data, status)=>{
-            console.log("on successfull login");
-            console.log(status);
-            console.log(data);
-            localStorage.setItem("receivedtoken",data);  
-        }
-    });
-}
 
 var onLogout=(req,res)=>{
   let logoutUrl="http://localhost:8000/api/logout";

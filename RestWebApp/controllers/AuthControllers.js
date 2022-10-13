@@ -23,5 +23,11 @@ export default class AuthController{
         result= await this.repoManager.Logout(req.params.id);
         res.send(result);
     }
-    
+    Inventory=async(req,res)=>{
+        let result=[];
+          result= await this.repoManager.Inventory(req,res);
+          res.send(result);
+        
+      }
+   
 }

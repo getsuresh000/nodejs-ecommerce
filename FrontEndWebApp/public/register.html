@@ -2,36 +2,73 @@
 <html>
     <head>
         <title>Register Page</title> 
-        <script src="/scripts/jquery-3.2.1.min.js"></script>
-        <script src="/scripts/app.js"></script>
-    </head>
-    <body>
+        
 
-        <a href="index.html">Home</a> | <a href="list.html">Catalog</a>|<a href="login.html">SignIn</a>
-        <hr/>
-        <div>
-            <div>
-                <label for="fullname">Name:</label><br>
-                <label><input size="50" type="text" id="fullname" name="fullname"/></label><br>
-                <label for="email">Email:</label><br>
-                <label><input size="50" type="email" id="email" name="email"/></label><br>
-                <label for="password">Password:</label><br>
-                <input size="50" type="password" id="password" name="password" ><br><br>
-                <label for="address">Address:</label>
-                <textarea id="address" name="address" rows="5" cols="33"></textarea><br>
-                <label for="mobile">Mobile:</label>
-                <input size="50" type="number" id="mobile" name="mobile"/><br><br>
-                <label for="role">Role:</label>
-                <select name="role" id="role">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script src="/scripts/app.js"></script>  
+</head>
+    <body>
+        
+       
+        <form id="registraion_form" class="form-horizontal" >
+					
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Name</label>
+            <div class="col-sm-6">
+            <input type="text" id="txt_username" class="form-control" placeholder="enter username" value="sp"/>
+            </div>
+            </div>
+                        
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Email</label>
+            <div class="col-sm-6">
+            <input type="email" id="txt_email" class="form-control" placeholder="enter email" value="sp@gmail.com"/>
+            </div>
+            </div>
+                        
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Password</label>
+            <div class="col-sm-6">
+            <input type="password" id="txt_password" class="form-control" placeholder="enter password" value="123456"/>
+            </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Mobile</label>
+                <div class="col-sm-6">
+                <input type="number" id="txt_mobile" class="form-control" placeholder="enter password" value="12456789"/>
+                </div>
+                </div>
+            <div class="form-group">
+                    <label class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="txt_address" class="form-control" placeholder="enter address" value="sp"/>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Role</label>
+                <div class="col-sm-6">
+                <select class="form-control" id="txt_role">
                     <option value="customer">Customer</option>
                     <option value="seller">Seller</option>
-                    <option value="vendor">Vendor</option>
                     <option value="staff">Staff</option>
                 </select>
-                <br><br>
-
-                <button onclick="onRegister()">Register</button>
-            </div> 
+                             </div>
+                </div>           
+            <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-6 m-t-15">
+            <button type="submit" id="btn_register" class="btn btn-success">Register</button>
             </div>
+            </div>
+                        
+            <div class="form-group">
+                <div id="message" class="col-sm-offset-3 col-sm-6 m-t-15"></div>
+            </div>
+                    
+        </form>
     </body>
 </html>

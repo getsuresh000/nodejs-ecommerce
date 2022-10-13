@@ -26,6 +26,7 @@ import CartController from '../controllers/CartControllers.js';
 import StaffManager from '../services/cache/StaffManager.js';
 import StaffController from '../controllers/StaffControllers.js';
 
+
 export default function (app) {
 
     let authMgr=new AuthManager();
@@ -49,9 +50,17 @@ export default function (app) {
     let staffMgr=new StaffManager();
     let staffcontroller=new StaffController(staffMgr);
 
+    app.get("/", (req, res) => {
+        res.json({
+          route: "/",
+          authentication: false,
+        });
+      });
+
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
     app.get("/api/users/logout", authcontroller.logout);
+    app.post("/api/users/inventory", authcontroller.Inventory);
 
     app.get("/api/users", sqlcontroller.getAll);
     app.get("/api/users/:id", sqlcontroller.getById);

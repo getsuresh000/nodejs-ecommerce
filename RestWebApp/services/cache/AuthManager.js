@@ -34,45 +34,59 @@ export default class AuthManager {
           }
         })
       }
-      
+      if (data.role == 'staff') {
+        let command = `call insert_user_staff("${data.email}","${password}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
+        sql.query(command, (err, rows, fields) => {
+          if (err) {
+            resolve({ error: err });
+          } else if (rows) {
+            resolve({ message: "Registered Successfully" });
+          }
+        })
+      }
+
     })
   }
 
 
 
-Login = async (req) => {
+Login = async (req,res) => {
   return new Promise((resolve) => {
     let data = req.body;
     const password = req.body.password;
     let command = `SELECT * FROM users WHERE email="${data.email}"  AND role="${data.role}"`;
     sql.query(command, async (err, rows, fields) => {
-      let userData = {
-        time: Date(),
-        email: data.email,
-      };
-
+    
+     
       if (err) {
         console.log("Error:", err);
         resolve({ error: "Unable to Login" });
       }
       let allUserStr = JSON.stringify(rows);
       var allUsers = JSON.parse(allUserStr);
+      let isPresent = false;
       if (allUsers.length > 0) {
 
         const hashedPassword = rows[0].password;
         if (await bcrypt.compare(password, hashedPassword)) {
-
+          isPresent = true;
+          let userData = {
+            time: Date(),
+            email: data.email,
+           
+            role:data.role,
+          };
           let token = jwt.sign(userData, secret.jwtSecretKey, {
             expiresIn: 72 * 3600,
           });
-          userData.token = token;
-          console.log("Login Successful:", userData);
+          
+          console.log(token,userData);
 
-          resolve({ message: "Login Success" });
-
+          res.status(200).send({token:token,userData:userData});
+         
         }
         else {
-          resolve({ error: "Invalid User" });
+          res.status(403).send({message: "Invalid User" });
         }
       }
 
@@ -94,7 +108,27 @@ Logout = async (id) => {
     });
   })
 }   
-   
+ 
+Inventory= async (req,res) => {
+  return new Promise((resolve) => {
+    
+  let authkey="Authorization";
+  let token=req.header(authkey);
+  let data=req.body;
+      // Verify the token using jwt.verify method
+      let decode = jwt.verify(token, secret.jwtSecretKey);
+   if(decode.email==data.email && decode.role=='customer'){
+  
+    res.send("Welcome to inventory");
+ 
+   }else{
+    res.send("Unauthorized user");
+   }
+    
+        })
+}
+
+
 };
 
 
