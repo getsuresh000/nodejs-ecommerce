@@ -69,6 +69,7 @@ export default function (app) {
     app.post("/api/users/login", authcontroller.login);
     app.get("/api/users/logout", authcontroller.logout);
     app.get("/api/users/dashboard", authcontroller.dashboard);
+
     app.post("/api/users/addtocart", authcontroller.addtocart);
     app.get("/api/users/cartdetails", authcontroller.cartDetails);
     app.delete("/api/users/deletecart/:id", authcontroller.deleteCart);
@@ -82,10 +83,10 @@ export default function (app) {
     app.put("/api/users/:id", sqlcontroller.put);
     app.get("/api/users/currentuser", sqlcontroller.currentUser);
 
-    app.post("/api/category", categoryController.insert);
+    app.post("/api/addcategory", categoryController.addCategory);
     app.get("/api/category", categoryController.getAll);
     app.get("/api/category/:id", categoryController.getById);
-    app.delete("/api/category/:id", categoryController.delete);
+    app.delete("/api/deletecategory/:id", categoryController.deleteCategory);
     app.put("/api/category/:id", categoryController.put);
 
     app.post("/api/products", productcontroller.insert);

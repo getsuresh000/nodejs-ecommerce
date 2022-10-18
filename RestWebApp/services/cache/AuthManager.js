@@ -21,8 +21,8 @@ export default class AuthManager {
   try {
     const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
     
-    if(decoded.role=='customer'){
-      return res.send("Welcome  "+decoded.email);
+    if(decoded.role=='customer' || decoded.role=='seller' || decoded.role=='admin' || decoded.role=='staff'){
+      return res.send("Welcome  "+decoded.email+" "+decoded.role);
     }
     else{
       return res.send("Unauthorized");
@@ -36,7 +36,7 @@ export default class AuthManager {
  
 };
    
- 
+
 
 addToCart = async(req, res) => {
   return new Promise((resolve) => {
@@ -149,11 +149,11 @@ deleteCart = async(req, res) => {
       if (err) {
         resolve({ error: err });
       }
-      if(rows==0){
+      if(!rows){
         resolve("data not exists");
       } else if (rows) {
         
-      resolve(rows);
+      resolve("cart deleted successfully");
       }
     }) 
     }
@@ -356,20 +356,10 @@ addPayment = async(req, res) => {
         let command = `call insert_user_customer("${data.email}","${epassword}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
         sql.query(command, (err, rows, fields) => {
           if (err) {
-            return res.status(403).json(err);
+            resolve({ message: err });
           } else if (rows) {
-            let userData = {
-              time: Date(),
-             
-              email: data.email,
-             password:epassword,
-              role:data.role,
-            };
-            let accessToken = jwt.sign(userData, secret.ACCESS_TOKEN_SECRET, {
-              expiresIn: 72 * 3600,
-            });
-            userData.token = accessToken;
-            res.status(201).json(userData);
+            resolve({ message: "Registered Successfully" });
+           
           }
         })
       }

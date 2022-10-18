@@ -28,10 +28,10 @@
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
-
+<script src="scripts/app.js"></script>
 </head>
 
-<body>
+<body onload="fetchProducts()">
 
   <div class="hero_area">
     <!-- header section strats -->
@@ -54,10 +54,10 @@
                   <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../register.html"> Register</a>
+                  <a class="nav-link" href="register.html"> Register</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../login.html">Login</a>
+                  <a class="nav-link" href="login.html">Login</a>
                 </li>
 
               </ul>
@@ -80,9 +80,37 @@
         </h2>
       </div>
       <div class="row">
-
+        <script>
+        var fetchProducts=()=>{
+          // alert("button is clicked.....");
+           let url="http://localhost:9000/api/products";
+           //use Ajax mechanism to fetch data from  rest api
+           //it is inbuilt function of jQuery Library
+           $.ajax({
+               dataType: "json",
+               url: url,
+               type:"GET",
+               success: (data)=>{
+                   console.log(data);
+                   let strData=JSON.stringify(data)
+                   let productList=document.getElementById("box");
+                   for(var i=0;i<data.length;i++){
+                    let detailbox=document.getElementById("detail-box");
+                       const textnode = document.createTextNode(data[i].title);
+                       node.appendChild(textnode.detailbox);
+                       productList.appendChild(node);
+                   }  
+               }
+             });
+           //on receive data dynamically append products names to existing HTML page
+           //DOM Manipulation
+           
+       }
+      </script>       
+<div id="productList"></div>
         <div class="col-sm-6 col-lg-3">
-          <div class="box" >
+
+          <div class="box" id="box">
             <div class="img-box">
               <img src="images/p4.png" alt="">
               <a href="" class="add_cart_btn">
@@ -91,7 +119,7 @@
                 </span>
               </a>
             </div>
-            <div class="detail-box" >
+            <div class="detail-box" id="detail-box">
               <h5>
                 Product Name
               </h5>
@@ -109,7 +137,9 @@
               </div>
             </div>
           </div>
+
         </div>
+
         <div class="col-sm-6 col-lg-3">
           <div class="box">
             <div class="img-box">

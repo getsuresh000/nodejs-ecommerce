@@ -223,7 +223,7 @@ var fetchProducts=()=>{
       });
     //on receive data dynamically append products names to existing HTML page
     //DOM Manipulation
-    console.log("Button is Clicked......");
+    
 }
 
 var fetchProductDetails=()=>{

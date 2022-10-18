@@ -33,6 +33,7 @@ export default class AuthController{
         res.send(result);
     }
 
+
     addtocart=async(req,res)=>{
         let result=[];
         result= await this.repoManager.addToCart(req,res);

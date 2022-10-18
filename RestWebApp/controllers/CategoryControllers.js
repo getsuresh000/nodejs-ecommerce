@@ -7,35 +7,37 @@ export default class CategoryController{
         this.repoManager=catMgr; 
 
     }
+    addCategory=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.addCategory(req,res);
+        res.send(result);
+    }
+    deleteCategory=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.deleteCategory(req,res);
+        res.send(result);
+    }
     getAll= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.getAll();
-        res.send(result.data); 
+        res.send(result); 
      
     };
      getById=async (req, res)=>{
         let result=[];
          result= await this.repoManager.getByCatId(req.params.id);
-         res.send(result.data);
+         res.send(result);
          
     }
 
-    insert=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.Insert(req);
-        res.send(result.data);
-    }
+    
     put=async(req,res)=>{
         let result=[];
-        result= await this.repoManager.Update(req,req.params.id);
-        res.send(result.data);
+        result= await this.repoManager.updateCategory(req,res);
+        res.send(result);
     }
 
 
 
-    delete=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.Delete(req.params.id);
-        res.send(result.data);
-    }
+   
 }
