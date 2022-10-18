@@ -17,7 +17,11 @@ export default class UserController {
         result = await this.repoManager.getById(req.params.id);
         res.send(result);
     }
-
+    currentUser=async(req,res)=>{
+        let result = [];
+        result = await this.repoManager.currentUser(req,res);
+        res.send(result); 
+    }
 
     put = async (req, res) => {
         let result = [];

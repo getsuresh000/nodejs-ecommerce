@@ -1,4 +1,5 @@
 //Controller
+
 export default class HomeController{
     //constructor Dependency Injection
     constructor(homeMgr){
@@ -7,21 +8,17 @@ export default class HomeController{
 
     }
     
-    Index=async(req,res)=>{
-      
-      
-    }
+
+
     About=async(req,res)=>{
-      
+        res.send({message:"Welcome to AboutUs Page"});
       
     }
     Contactus=async(req,res)=>{
-      
+        res.send({message:"Welcome to ContactUs Page"});
       
     }
 
-   
-    
-  
+
     
 }

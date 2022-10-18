@@ -2,9 +2,10 @@ import express from 'express'
 import session from 'express-session';
 import  cors    from 'cors';
 import router from './routes/routers.js';
+import cookieparser from 'cookie-parser';
 
 const app=express();
-const PORT = 8000;
+const PORT = 9000;
 
 var sessionmiddleware={
     secret: "thisismysecrctekey",
@@ -19,7 +20,7 @@ app.use(session(sessionmiddleware));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
-
+app.use(cookieparser());
 //REST API Route Mapping
 router(app);
 

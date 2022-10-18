@@ -11,30 +11,30 @@ export default class ProductManager {
             let command = `SELECT * FROM ${this.model.table_name};`;
             sql.query(command, (err, rows, field) => {
                 if (err) {
-                    resolve({ data: err });
+                    resolve(err);
                 }
                 else if (rows.length == 0) {
-                    resolve({ data: "data not exists" });
+                    resolve("data not exists");
                 }
                 else {
-                    resolve({ data: rows });
+                    resolve(rows);
                 }
             });
         });
     };
 
-    getById = function (id) {
+    getByCatId = function (id) {
         return new Promise(resolve => {
             let command = `SELECT * FROM  ${this.model.table_name} WHERE category_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
-                    resolve({ data: err });
+                    resolve(err);
                 }
                 else if (rows.length == 0) {
-                    resolve({ data: "data not exists" });
+                    resolve("data not exists" );
                 }
                 else {
-                    resolve({ data: rows });
+                    resolve(rows);
                 }
 
             })

@@ -3,6 +3,8 @@
 //Client Side Javascript Code
 //Registration
 
+
+
 $(document).on('click','#btn_register',function(e){
   e.preventDefault();
 
@@ -15,8 +17,8 @@ $(document).on('click','#btn_register',function(e){
   credential.mobile=$('#txt_mobile').val();
   credential.role=$('#txt_role').val();
 
-  let registerUrl="http://localhost:8000/api/users/register";
-  
+  let registerUrl="http://localhost:9000/api/users/register";
+
   $.ajax({
       url: registerUrl,
       type:"POST",
@@ -38,26 +40,67 @@ $(document).on('click','#btn_login',function(e){
   let password=$('#txt_password').val();
   let role=$('#txt_role').val();
 
-  let credential={};
-  credential.email=email;
-  credential.role=role;
+  
 
-  let loginUrl="http://localhost:8000/api/users/inventory";
+  let loginUrl="http://localhost:9000/api/users/login";
  
   $.ajax({
       url: loginUrl,
       type:"POST",
-      data:credential,
+      data:{
+        email:email,
+        password:password,
+        role:role,
+      },
      
       
-      success: (data,response)=>{
-         console.log(response.message);
-         localStorage.setItem("Authorization",data);
-         $("#message").html(response.userData);
+      success: (response)=>{
+         
+         localStorage.setItem("Authorization",response);
+      ; 
+      window.location.href="../dashboard.html";
       }
   });
 });
 
+$(document).on('click','#getUser',function(e){
+  e.preventDefault();
+  const decoded = localStorage.getItem(Authorization);
+    
+  if(decoded.role=='customer'){
+    $("#message").html(decoded.email);
+  }
+  else{
+    $("#message").html("unauthorized");
+  }
+  
+});
+Inventory = async(req, res) => {
+  return new Promise((resolve) => {
+  const token =
+    req.body.token || req.query.token || req.headers["x-access-token"];
+
+  if (!token) {
+   return res.send("A token is required for authentication");
+  }
+ 
+  try {
+    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+    
+    if(decoded.email=='sureshrun@gmail.com'){
+      return res.send("Welcome 🙌 ");
+    }
+    else{
+      return res.send("Unauthorized");
+    }
+    
+  } catch (err) {
+    return  res.status(401).send("Invalid Token");
+  }
+ 
+});
+ 
+};
 /*
   var onRegister=()=>{
 		
@@ -131,10 +174,35 @@ $(document).on('click','#btn_login',function(e){
 	}
 */
 
+var fetchCategory=()=>{
+  // alert("button is clicked.....");
+   let url="http://localhost:9000/api/category/";
+   //use Ajax mechanism to fetch data from  rest api
+   //it is inbuilt function of jQuery Library
+   $.ajax({
+       dataType: "json",
+       url: url,
+       type:"GET",
+       success: (data)=>{
+           console.log(data);
+           let strData=JSON.stringify(data)
+           let categoryList=document.getElementById("categoryList");
+           for(var i=0;i<data.length;i++){
+               const node = document.createElement("li");
+               const textnode = document.createTextNode(data[i].categoryName);
+               node.appendChild(textnode);
+               categoryList.appendChild(node);
+           }  
+       }
+     });
+   //on receive data dynamically append products names to existing HTML page
+   //DOM Manipulation
+   console.log("Button is Clicked......");
+}
 
-var fetchData=()=>{
+var fetchProducts=()=>{
    // alert("button is clicked.....");
-    let url="http://localhost:8000/api/products";
+    let url="http://localhost:9000/api/products";
     //use Ajax mechanism to fetch data from  rest api
     //it is inbuilt function of jQuery Library
     $.ajax({
@@ -201,9 +269,9 @@ var onLogout=(req,res)=>{
 var fetchOrders=()=>{
     let apiError;
     let result;
-    let token= localStorage.getItem("receivedtoken");
+    let token= localStorage.getItem("Authorization");
     console.log(token);
-    fetch("//localhost:8000/api/orders", {
+    fetch("http://localhost:9000/api/users/orderdetails", {
         headers: {
           "Content-Type": "application/json",
           "Authorization":token
@@ -214,10 +282,10 @@ var fetchOrders=()=>{
             apiError = false;
             result = await response.json();
             console.log(result);
-            let ordersList=document.getElementById("lstOrders");
+            let ordersList=document.getElementById("listOrders");
             for(var i=0;i<result.length;i++){
                 const node = document.createElement("li");
-                const textnode = document.createTextNode(result[i].orderid+" " +result[i].date  +" " +result[i].status );
+                const textnode = document.createTextNode(result[i].order_id );
                 node.appendChild(textnode);
                 ordersList.appendChild(node);
                 
@@ -228,3 +296,38 @@ var fetchOrders=()=>{
         })
         .catch(() => (apiError = true));
 }
+
+
+var addtocart=()=>{
+  let apiError;
+  let result;
+  let token= localStorage.getItem("Authorization");
+  console.log(token);
+  fetch("http://localhost:9000/api/users/addtocart/", {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization":token
+      }
+    })
+      .then(async response => {
+        if (response.ok) {
+          apiError = false;
+          result = await response.json();
+          console.log(result);
+          let ordersList=document.getElementById("listOrders");
+          for(var i=0;i<result.length;i++){
+              const node = document.createElement("li");
+              const textnode = document.createTextNode(result[i].order_id );
+              node.appendChild(textnode);
+              ordersList.appendChild(node);
+              
+          }  
+        } else {
+          apiError = true;
+        }
+      })
+      .catch(() => (apiError = true));
+}
+
+
+

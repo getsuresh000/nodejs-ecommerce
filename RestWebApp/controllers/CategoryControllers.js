@@ -15,7 +15,7 @@ export default class CategoryController{
     };
      getById=async (req, res)=>{
         let result=[];
-         result= await this.repoManager.getById(req.params.id);
+         result= await this.repoManager.getByCatId(req.params.id);
          res.send(result.data);
          
     }

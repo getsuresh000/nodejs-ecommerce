@@ -2,7 +2,7 @@
 /Day_11
 /Day_12
 /FrontEndApp
-/FrontEndWebApp/node_modules
+/FrontEndWebApp
 /MVCAPP1
 /MVCAPP2
 /MVCAPP3
@@ -11,7 +11,7 @@
 /RestWebApp/controllers/productcontroller.js
 /RestWebApp/step1.js
 /RestWebApp/step2.js
-/FrontEndApp
+
 
 
 

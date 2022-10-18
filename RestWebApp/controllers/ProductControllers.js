@@ -12,9 +12,9 @@ export default class ProductController{
         result=await this.repoManager.getAll();
         res.send(result); 
     };
-     getById=async (req, res)=>{
+     getByCatId=async (req, res)=>{
         let result=[];
-         result= await this.repoManager.getById(req.params.id);
+         result= await this.repoManager.getByCatId(req.params.id);
          res.send(result);
     }
 
@@ -23,6 +23,12 @@ export default class ProductController{
         result= await this.repoManager.Insert(req);
       
         res.send(result.data);
+    }
+    addToCart=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.addToCart(req,res);
+      
+        res.send(result);
     }
     put=async(req,res)=>{
         let result=[];

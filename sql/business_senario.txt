@@ -1,48 +1,76 @@
-get->Users [get all users from users table]
-get->UserById [get users by id from users table]
-post->InsertUser [Insert new user into users table]
-delete->RemoveUser [remove user from users table]
-put->UpdateUser [update existing user in users table]
+Business senarios
 
-get->customers [get all customers from customers table]
-get->customerById [get customers by id from customers table]
-post->Insertcustomer [Insert existing customer into customers table]
-delete->Removecustomer [remove customer from customers table]
-put->Updatecustomer [update existing customer in customers table]
+admin:-
+(/api/admin)
+--get all products
+--get all customers
+--get all vendors
+--get all sellers
 
-get->sellers [get all sellers from sellers table]
-get->SellerById [get sellers by id from sellers table]
-post->InsertSeller [Insert existing sellers into sellers table]
-delete->RemoveSeller [remove sellers from sellers table]
-put->UpdateSeller [update existing sellers in sellers table]
+all thing also get by id()
 
-get->vendors [get all vendors from vendors table]
-get->VendorById [get vendors by id from vendors table]
-post->InsertVendor [Insert existing vendors into vendors table]
-delete->RemoveVendor [remove vendors from vendors table]
-put->UpdateVendor [update existing vendors in vendors table]
+--get top 10 sellers
+---get top 11 customers
+---get top  10 selling products
 
-get->Products [get all products from products table]
-get->ProductById [get all products from products table]
-post->InsertProduct [Insert new product into products table]
-delete->RemoveProduct [remove products from products table]
-put->UpdateProduct [update existing products in products table]
+customers login:-
+customer without login show only products
+ 
+customer:- login  show session storage cart product list added by customer
+(/api/customerlogin)
+for login user:-----let cmd=`SELECT * from users WHERE email='${username}' and password='${password}' `
 
-get->Orders [get all Orders from Orders table]
-get->OrdersById [get all OrdersById from Orders table]
-post->InsertOrders [Insert new InsertOrders into Orders table]
-delete->RemoveOrders [remove RemoveOrders from Orders table]
-put->UpdateOrders [update existing UpdateOrders in UpdateOrders table]
+-------------all product list
+select * from  product
+-------------on add cart product get into session
+req.session.cart=[]
+--------------delete item from cart
+  req.session.cart=req.session.cart.filter((data)=>(data.productid !=req.params.id))
+    res.send(req.session.cart);
+    res.end();
+-------------payment initate after order placed routes got payments table
 
-get->itemDetails [get all itemDetails from itemDetails table]
-get->itemDetailsById [get all itemDetailsById from itemDetails table]
-post->itemDetails [Insert new InsertitemDetails into itemDetails table]
-delete->itemDetails [remove RemoveitemDetails from itemDetails table]
-put->itemDetails [update existing UpdateitemDetails in itemDetails table]
 
-get->Payments [get all Payments from Payments table]
-get->PaymentsById [get all PaymentsById from Payments table]
-post->InsertPayments [Insert new InsertPayments into Payments table]
-delete->RemovePayments [remove RemovePayments from Payments table]
-put->UpdatePayments [update existing UpdatePayments in Payments table]
 
+
+
+after order get placed
+orders table get
+--------customer id
+--------product id
+
+
+
+ vendor:-
+ (/api/vendorlogin)
+for login user:-----let cmd=`SELECT * from users WHERE email='${username}' and password='${password}' `
+--------order detail----get address of delivery of user by orderid from orders table
+--------product price ---for delivery order  
+-----confrmation after complition order
+
+
+
+seller:-
+after login:-
+(/api/sellerlogin)
+for login user:-----let cmd=`SELECT * from users WHERE email='${username}' and password='${password}' `
+---------------total product added by seller in product table
+--------------product sell by seller
+-------------top selling product by seller
+------------product left added by any seller
+
+`SELECT * FROM products WHERE product_id IN (SELECT product_id_fk2 FROM cart_item WHERE user_id_fk1= ${id})`
+
+order deatil:-
+get order by order detail id
+get customer deatil by orderdeatil table  where customerid set foregin key from customer table
+get produc deatil by orderdeatil table  where productid set foregin key from product table
+
+
+orders:-
+get order detail by order detailid from orders table set  as forignkey in orders table
+
+payments:-
+     payment get genrated by using odrerid from orders table set as foreginkey in payments table 
+
+     payment made on date

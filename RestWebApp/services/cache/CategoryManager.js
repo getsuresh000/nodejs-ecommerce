@@ -1,14 +1,10 @@
-import Category from "../../models/CategoryModels.js";
 import sql from '../db/db.js';
 
 export default class CategoryManager {
-    constructor() {
-        this.model = new Category;
-    }
-
+   
     getAll = () => {
         return new Promise((resolve) => {
-            let command = `SELECT * FROM ${this.model.table_name};`;
+            let command = `SELECT * FROM categories;`;
             sql.query(command, (err, rows, field) => {
                 if (err) {
                     resolve({ data: err });
@@ -25,7 +21,7 @@ export default class CategoryManager {
 
     getById = function (id) {
         return new Promise(resolve => {
-            let command = `SELECT * FROM  ${this.model.table_name} WHERE category_id=` + id;
+            let command = `SELECT * FROM  categories WHERE category_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -46,7 +42,7 @@ export default class CategoryManager {
         return new Promise(resolve => {
             const data = req.body;
 
-            sql.query(`insert into ${this.model.table_name} set ?`, [data], (err, rows, fields) => {
+            sql.query(`insert into categories set ?`, [data], (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
                 }
@@ -62,7 +58,7 @@ export default class CategoryManager {
 
     Delete = function (id) {
         return new Promise(resolve => {
-            let command = `DELETE FROM ${this.model.table_name} Where category_id=` + id;
+            let command = `DELETE FROM categories Where category_id=` + id;
             sql.query(command, (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
@@ -84,7 +80,7 @@ export default class CategoryManager {
             const data = req.body;
             const id = req.params.id;
 
-            sql.query(`update ${this.model.table_name} set ? where category_id=?`, [data, id], (err, rows, fields) => {
+            sql.query(`update categories set ? where category_id=?`, [data, id], (err, rows, fields) => {
                 if (err) {
                     resolve({ data: err });
                 }

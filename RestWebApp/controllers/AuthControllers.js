@@ -1,4 +1,6 @@
 //Controller
+
+
 export default class AuthController{
     //constructor Dependency Injection
     constructor(authMgr){
@@ -9,7 +11,7 @@ export default class AuthController{
     
     register=async(req,res)=>{
       let result=[];
-        result= await this.repoManager.Register(req);
+        result= await this.repoManager.Register(req,res);
         res.send(result);
       
     }
@@ -18,16 +20,47 @@ export default class AuthController{
         result= await this.repoManager.Login(req,res);
         res.send(result);
     }
+
     logout = async(req, res) => {
         let result=[];
         result= await this.repoManager.Logout(req.params.id);
         res.send(result);
     }
-    Inventory=async(req,res)=>{
+
+    dashboard=async(req,res)=>{
         let result=[];
-          result= await this.repoManager.Inventory(req,res);
-          res.send(result);
-        
-      }
-   
+        result= await this.repoManager.Dashboard(req,res);
+        res.send(result);
+    }
+
+    addtocart=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.addToCart(req,res);
+        res.send(result);
+    }
+    cartDetails=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.cartDetails(req,res);
+        res.send(result);
+    }
+    deleteCart=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.deleteCart(req,res);
+        res.send(result);
+    }
+    placeOrder=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.placeOrder(req,res);
+        res.send(result);
+    }
+    orderDetails=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.orderDetails(req,res);
+        res.send(result);
+    }
+    addPayment=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.addPayment(req,res);
+        res.send(result);
+    }
 }
