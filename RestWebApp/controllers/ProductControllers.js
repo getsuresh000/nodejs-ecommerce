@@ -18,11 +18,16 @@ export default class ProductController{
          res.send(result);
     }
 
-    insert=async(req,res)=>{
+    addProduct=async(req,res)=>{
         let result=[];
-        result= await this.repoManager.Insert(req);
+        result= await this.repoManager.addProduct(req,res);
       
-        res.send(result.data);
+        res.send(result);
+    }
+    updateProduct=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.updateProduct(req,res);
+        res.send(result);
     }
     addToCart=async(req,res)=>{
         let result=[];
@@ -30,17 +35,13 @@ export default class ProductController{
       
         res.send(result);
     }
-    put=async(req,res)=>{
+
+
+
+
+    deleteProduct=async(req,res)=>{
         let result=[];
-        result= await this.repoManager.Update(req,req.params.id);
-        res.send(result.data);
-    }
-
-
-
-    delete=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.Delete(req.params.id);
-        res.send("product deleted successfully");
+        result= await this.repoManager.deleteProduct(req,res);
+        res.send(result);
     }
 }

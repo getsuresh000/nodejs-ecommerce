@@ -23,7 +23,7 @@ export default class AuthController{
 
     logout = async(req, res) => {
         let result=[];
-        result= await this.repoManager.Logout(req.params.id);
+        result= await this.repoManager.Logout(req,res);
         res.send(result);
     }
 
@@ -32,7 +32,11 @@ export default class AuthController{
         result= await this.repoManager.Dashboard(req,res);
         res.send(result);
     }
-
+    updatePassword=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.updatePassword(req,res);
+        res.send(result);
+    }
 
     addtocart=async(req,res)=>{
         let result=[];

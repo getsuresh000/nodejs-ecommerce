@@ -7,6 +7,7 @@ export default class SellersController{
         this.repoManager=sellerMgr; 
 
     }
+
     getAll= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.getAll();
@@ -37,4 +38,9 @@ export default class SellersController{
         result= await this.repoManager.Delete(req.params.id);
         res.send("sellers deleted successfully");
     }
+    dashboard= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.Dashboard(req,res);
+        res.send(result); 
+    };
 }

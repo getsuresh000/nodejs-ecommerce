@@ -6,11 +6,11 @@ export default class CategoryManager {
 
     addCategory = async(req, res) => {
         return new Promise((resolve) => {
-        const token =
+          const token =
           req.body.token || req.query.token || req.headers["x-access-token"];
       
         if (!token) {
-         return res.send("A token is required for authentication");
+         return res.send("Staff token is required for authentication");
         }
        
         try {
@@ -45,7 +45,7 @@ export default class CategoryManager {
           
         } catch (err) {
           return  res.status(401).send("Invalid Token");
-        }
+        } 
        
       });
        
@@ -59,7 +59,7 @@ deleteCategory = async(req, res) => {
       req.body.token || req.query.token || req.headers["x-access-token"];
   
     if (!token) {
-     return res.send("A token is required for authentication");
+     return res.send("Staff token is required for authentication");
     }
    
     try {
@@ -68,7 +68,7 @@ deleteCategory = async(req, res) => {
       
       if(decoded.role=='staff'){
   
-   let command =   `delete categories from categories JOIN staff where staff.user_Id="${decoded.userid}" and categories.category_id="${req.params.id}" `;
+   let command =   `delete from categories where category_id="${req.params.id}" `;
        
       sql.query(command, (err, rows, fields) => {
         if (err) {
@@ -101,7 +101,7 @@ deleteCategory = async(req, res) => {
       req.body.token || req.query.token || req.headers["x-access-token"];
   
     if (!token) {
-     return res.send("A token is required for authentication");
+     return res.send("Staff token is required for authentication");
     }
    
     try {
@@ -115,13 +115,15 @@ deleteCategory = async(req, res) => {
         if (err) {
           resolve({ error: err });
         } else if (rows) {
-          let staff_id=rows[0].staff_id;
           
-          sql.query(`update categories set ? where staff_id=?`, [data, staff_id], (err, rows, fields) => {
+          let cat_id=req.params.id;
+          let staff_id=rows[0].staff_id;
+          sql.query(`update categories set ? where category_id=? `, [data, cat_id], (err, rows, fields) => {
           
             if (err) {
               resolve({ error: err });
-            } else if (rows) {
+            } 
+            else if (rows) {
               resolve("Category updated successfully" );
             }
           });
@@ -176,28 +178,5 @@ deleteCategory = async(req, res) => {
             })
         })
     };
-
-
-
-    Update = function (req) {
-        return new Promise(resolve => {
-
-            const data = req.body;
-            const id = req.params.id;
-
-            sql.query(`update categories set ? where category_id=?`, [data, id], (err, rows, fields) => {
-                if (err) {
-                    resolve({ data: err });
-                }
-                else if (rows.affectedRows == 0) {
-                    resolve({ data: "data not exists" });
-                }
-                else {
-                    resolve({ data:rows.affectedRows+ " Updated Successfully" });
-
-                }
-            })
-        })
-    }
 
 }

@@ -7,16 +7,41 @@ export default class StaffController{
         this.repoManager=staffMgr; 
 
     }
-    getAll= async(req, res)=>{  
+    getAllCustomers= async(req, res)=>{  
         let result=[];
-        result=await this.repoManager.getAll();
-        res.send(result.data); 
+        result=await this.repoManager.getAllCustomers(req,res);
+        res.send(result); 
      
     };
-     getById=async (req, res)=>{
+    deleteCustomerById= async(req, res)=>{  
         let result=[];
-         result= await this.repoManager.getById(req.params.id);
-         res.send(result.data);
+        result=await this.repoManager.deleteCustomerById(req,res);
+        res.send(result); 
+     
+    };
+    getAllSellers= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getAllSellers(req,res);
+        res.send(result); 
+     
+    };
+    deleteSellerById= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.deleteSellerById(req,res);
+        res.send(result); 
+     
+    };
+    getAllOrders= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getAllOrders(req,res);
+        res.send(result); 
+     
+    };
+
+     getOrderById=async (req, res)=>{
+        let result=[];
+         result= await this.repoManager.getOrderById(req,res);
+         res.send(result);
          
     }
 

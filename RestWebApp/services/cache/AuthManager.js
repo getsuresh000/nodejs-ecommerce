@@ -9,6 +9,54 @@ export default class AuthManager {
 
   //constructor Dependency Injection
 
+updatePassword = async(req, res) => {
+  let data=req.body;
+
+  let epassword =await bcrypt.hash(data.password,10);
+  
+  return new Promise((resolve) => {
+
+  const token =
+    req.body.token || req.query.token || req.headers["x-access-token"];
+
+  if (!token) {
+   return res.send("A token is required for authentication");
+  }
+ 
+  try {
+
+    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+    
+    if(decoded.role=='customer' || decoded.role=='seller' || decoded.role=='admin' || decoded.role=='staff'){
+      
+      let command =   `update users set password="${epassword}" where id=` +decoded.userid;
+           
+      sql.query(command, (err, rows, fields) => {
+        if (err) {
+          resolve({ error: err });
+        }
+        if(!rows){
+          resolve("data not exists");
+        } else if (rows) {
+          
+        resolve("updated password of "+decoded.email);
+        }
+      }) 
+    }
+    else{
+      return res.send("Unauthorized");
+    }
+    
+  } catch (err) {
+    return  res.status(401).send("Invalid Token");
+  }
+ 
+});
+ 
+};
+ 
+
+
  Dashboard = async(req, res) => {
   return new Promise((resolve) => {
   const token =
@@ -22,7 +70,7 @@ export default class AuthManager {
     const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
     
     if(decoded.role=='customer' || decoded.role=='seller' || decoded.role=='admin' || decoded.role=='staff'){
-      return res.send("Welcome  "+decoded.email+" "+decoded.role);
+      return res.send("Welcome  "+decoded.email+" "+decoded.role+" "+decoded.userid);
     }
     else{
       return res.send("Unauthorized");
@@ -378,10 +426,10 @@ addPayment = async(req, res) => {
         let command = `call insert_user_staff("${data.email}","${epassword}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
         sql.query(command, (err, rows, fields) => {
           if (err) {
-            return res.status(403).json(err);
+            resolve({ message: err });
           } else if (rows) {
-            return res.status(200).json({ message: "Registered Successfully" });
-   
+            resolve({ message: "Registered Successfully" });
+           
           }
         })
       }
@@ -394,61 +442,6 @@ addPayment = async(req, res) => {
     }
   });
   };
-
-
-  Register1 = async function (req, res) {
-    
-
-    const salt = await bcrypt.genSalt(6);
-
-    const password = await bcrypt.hash(req.body.password, salt);
-
-    return new Promise((resolve) => {
-      let data = req.body;
-      if (data.role == 'customer') {
-        let command = `call insert_user_customer("${data.email}","${password}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ error: err });
-          } else if (rows) {
-            
-            let userData = {
-              time: Date(),
-              email: data.email,
-             
-              role:data.role,
-            };
-            let accessToken = jwt.sign(userData, secret.ACCESS_TOKEN_SECRET, {
-              expiresIn: 72 * 3600,
-            });
-            userData.token = accessToken;
-            res.status(201).json({message:userData});
-          }
-        })
-      }
-      if (data.role == 'seller') {
-        let command = `call insert_user_seller("${data.email}","${password}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ error: err });
-          } else if (rows) {
-            resolve({ message: "Registered Successfully" });
-          }
-        })
-      }
-      if (data.role == 'staff') {
-        let command = `call insert_user_staff("${data.email}","${password}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ error: err });
-          } else if (rows) {
-            resolve({ message: "Registered Successfully" });
-          }
-        })
-      }
-
-    })
-  }
 
 
 
@@ -499,21 +492,41 @@ Login = async (req,res) => {
 });
 };
 
-
-Logout = async (id) => {
-  let destroy = req.session.destroy;
+  
+Logout = async(req, res) => {
   return new Promise((resolve) => {
+  const token =
+    req.body.token || req.query.token || req.headers["x-access-token"];
 
-    if (destroy, (err, result) => {
-      if (err) {
-        resolve({ error: err })
+  if (!token) {
+   return res.send("token is required for authentication");
+  }
+ 
+  try {
+    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+    
+    if(decoded.role=='customer' || decoded.role=='seller' || decoded.role=='admin' || decoded.role=='staff'){
+     
+    jwt.sign(token, secret.ACCESS_TOKEN_SECRET, { expiresIn: 1 } , (logout, err) => {
+      if (logout) {
+      return res.send({msg : 'You have been Logged Out' });
+      } else {
+      return res.send({msg:'Error'});
       }
-      else if (result) {
-        resolve({ result: "Logout Success" });
-      }
-    });
-  })
-}   
+      });
+    }
+    else{
+      return res.send({msg:'Unauthorized'});
+    }
+
+    
+  } catch (err) {
+    return  res.status(401).send("Invalid Token");
+  }
+ 
+});
+ 
+};  
 
 
 Inventory1= async (req,res) => {

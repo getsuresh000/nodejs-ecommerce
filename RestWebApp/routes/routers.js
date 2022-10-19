@@ -26,7 +26,8 @@ import CartController from '../controllers/CartControllers.js';
 import StaffManager from '../services/cache/StaffManager.js';
 import StaffController from '../controllers/StaffControllers.js';
 
-import HomeController from '../controllers/HomeController.js';
+import AdminManager from '../services/cache/AdminManager.js';
+import AdminController from '../controllers/AdminControllers.js';
 
 
 export default function (app) {
@@ -51,7 +52,8 @@ export default function (app) {
     let cartcontroller=new CartController(cartMgr);
     let staffMgr=new StaffManager();
     let staffcontroller=new StaffController(staffMgr);
-    let homecontroller=new HomeController();
+    let adminMgr=new AdminManager();
+    let admincontroller=new AdminController(adminMgr);
 
     app.get("/", (req, res) => {
         res.json({
@@ -62,13 +64,13 @@ export default function (app) {
 
  
   
-    app.get("/api/aboutus",homecontroller.About);
-    app.get("/api/contactus",homecontroller.Contactus);
-    
+ 
     app.post("/api/users/register", authcontroller.register);
     app.post("/api/users/login", authcontroller.login);
-    app.get("/api/users/logout", authcontroller.logout);
+    app.put("/api/users/updatepassword", authcontroller.updatePassword);
+    app.put("/api/users/logout", authcontroller.logout);
     app.get("/api/users/dashboard", authcontroller.dashboard);
+
 
     app.post("/api/users/addtocart", authcontroller.addtocart);
     app.get("/api/users/cartdetails", authcontroller.cartDetails);
@@ -83,20 +85,16 @@ export default function (app) {
     app.put("/api/users/:id", sqlcontroller.put);
     app.get("/api/users/currentuser", sqlcontroller.currentUser);
 
-    app.post("/api/addcategory", categoryController.addCategory);
     app.get("/api/category", categoryController.getAll);
     app.get("/api/category/:id", categoryController.getById);
-    app.delete("/api/deletecategory/:id", categoryController.deleteCategory);
-    app.put("/api/category/:id", categoryController.put);
-
-    app.post("/api/products", productcontroller.insert);
+    
+    app.post("/api/seller/addproduct", productcontroller.addProduct);
     app.get("/api/products", productcontroller.getAll);
     app.get("/api/products/:id", productcontroller.getByCatId);
-    app.delete("/api/products/:id", productcontroller.delete);
-    app.put("/api/products/:id", productcontroller.put);
+    app.delete("/api/sellers/products/:id", productcontroller.deleteProduct);
+    app.put("/api/sellers/updateproduct/:id", productcontroller.updateProduct);
 
-
-    app.post("/api/sellers", sellercontroller.insert);
+    app.get("/api/sellers/dashboard", sellercontroller.dashboard);
     app.get("/api/sellers", sellercontroller.getAll);
     app.get("/api/sellers/:id", sellercontroller.getById);
     app.delete("/api/sellers/:id", sellercontroller.delete);
@@ -108,11 +106,24 @@ export default function (app) {
     app.delete("/api/customers/:id", customercontroller.delete);
     app.put("/api/customers/:id", customercontroller.put);
 
-    app.post("/api/staff", staffcontroller.insert);
-    app.get("/api/staff", staffcontroller.getAll);
-    app.get("/api/staff/:id", staffcontroller.getById);
-    app.delete("/api/staff/:id", staffcontroller.delete);
-    app.put("/api/staff/:id", staffcontroller.put);
+  
+    app.get("/api/admin/customers", admincontroller.getAllCustomers);
+    app.get("/api/admin/customer/:id", admincontroller.getCustomerById);
+    app.get("/api/admin/sellers", admincontroller.getAllSellers);
+    app.get("/api/admin/seller/:id", admincontroller.getSellerById);
+    app.get("/api/admin/orders", admincontroller.getAllOrders);
+    app.get("/api/admin/orders/:id", admincontroller.getOrderById);
+    app.get("/api/admin/staff", admincontroller.getAllStaff);
+
+    app.get("/api/staff/customers", staffcontroller.getAllCustomers);
+    app.delete("/api/staff/customer/:id", staffcontroller.deleteCustomerById);
+    app.get("/api/staff/sellers", staffcontroller.getAllSellers);
+    app.delete("/api/staff/seller/:id", staffcontroller.deleteSellerById);
+    app.get("/api/staff/orders", staffcontroller.getAllOrders);
+    app.get("/api/staff/orders/:id", staffcontroller.getOrderById);
+    app.post("/api/staff/addcategory", categoryController.addCategory);
+    app.delete("/api/staff/deletecategory/:id", categoryController.deleteCategory);
+   
 
     app.post("/api/orders", ordercontroller.insert);
     app.get("/api/orders", ordercontroller.getAll);
