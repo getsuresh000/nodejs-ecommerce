@@ -52,48 +52,57 @@ export default class CategoryManager {
       };
       
       
-    
-deleteCategory = async(req, res) => {
-    return new Promise((resolve) => {
-    const token =
-      req.body.token || req.query.token || req.headers["x-access-token"];
-  
-    if (!token) {
-     return res.send("Staff token is required for authentication");
-    }
-   
-    try {
-     
-      const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+ 
+      deleteCategory = async(req, res) => {
+        return new Promise((resolve) => {
+        const token =
+          req.body.token || req.query.token || req.headers["x-access-token"];
       
-      if(decoded.role=='staff'){
-  
-   let command =   `delete from categories where category_id="${req.params.id}" `;
+        if (!token) {
+         return res.send("Staff token is required for authentication");
+        }
        
-      sql.query(command, (err, rows, fields) => {
-        if (err) {
-          resolve({ error: err });
-        }
-        if(!rows){
-          resolve("data not exists");
-        } else if (rows) {
+        try {
+         
+          const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
           
-        resolve("Category deleted");
+          if(decoded.role=='staff'){
+          let command =   `SELECT staff_id FROM staff where user_Id="${decoded.userid}" `;
+          sql.query(command, (err, rows, fields) => {
+            if (err) {
+              resolve({ error: err });
+            } else if (rows) {
+              
+              let cat_id=req.params.id;
+              let staff_id=rows[0].staff_id;
+              sql.query(`delete from categories where category_id=? and staff_id=?`, [cat_id,staff_id], (err, rows, fields) => {
+              
+                if (err) {
+                  resolve({ error: err });
+                } 
+                if(rows.affectedRows==0){
+                  resolve("data not exist");
+                }
+                else if (rows) {
+                  resolve("Category deleted successfully");
+                }
+              });
+            }
+          })
+          }
+         
+          else{
+            return res.send("Unauthorized User");
+          }
+          
+        } catch (err) {
+          return  res.status(401).send("Invalid Token");
         }
-      }) 
-      }
-     
-      else{
-        return res.send("Unauthorized");
-      }
-      
-    } catch (err) {
-      return  res.status(401).send("Invalid Token");
-    }
-   
-  });
-   
-  };
+       
+      });
+       
+      };
+    
 
   updateCategory = async(req, res) => {
     return new Promise((resolve) => {
@@ -118,13 +127,16 @@ deleteCategory = async(req, res) => {
           
           let cat_id=req.params.id;
           let staff_id=rows[0].staff_id;
-          sql.query(`update categories set ? where category_id=? `, [data, cat_id], (err, rows, fields) => {
+          sql.query(`update categories set ? where category_id=? and staff_id=?`, [data, cat_id,staff_id], (err, rows, fields) => {
           
             if (err) {
               resolve({ error: err });
             } 
+            if(rows.affectedRows==0){
+              resolve("data not exist");
+            }
             else if (rows) {
-              resolve("Category updated successfully" );
+              resolve("Category updated successfully");
             }
           });
         }

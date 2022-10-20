@@ -72,12 +72,14 @@ export default function (app) {
     app.get("/api/users/dashboard", authcontroller.dashboard);
 
 
-    app.post("/api/users/addtocart", authcontroller.addtocart);
-    app.get("/api/users/cartdetails", authcontroller.cartDetails);
-    app.delete("/api/users/deletecart/:id", authcontroller.deleteCart);
-    app.post("/api/users/placeorder/:id", authcontroller.placeOrder);
-    app.get("/api/users/orderdetails", authcontroller.orderDetails);
-    app.post("/api/users/addpayment/:id", authcontroller.addPayment);
+    app.post("/api/customers/addtocart/:id", cartcontroller.addtocart);
+    app.get("/api/customers/cartdetails", cartcontroller.cartDetails);
+    app.put("/api/customers/updatecart/:id", cartcontroller.updateCart);
+    app.delete("/api/customers/deletecart/:id", cartcontroller.deleteCart);
+
+    app.post("/api/customers/placeorder/:id", ordercontroller.placeOrder);
+    app.get("/api/customers/orderdetails", ordercontroller.orderDetails);
+    app.post("/api/customers/addpayment/:id", ordercontroller.addPayment);
 
     app.get("/api/users", sqlcontroller.getAll);
     app.get("/api/users/:id", sqlcontroller.getById);
@@ -90,16 +92,21 @@ export default function (app) {
     
     app.post("/api/seller/addproduct", productcontroller.addProduct);
     app.get("/api/products", productcontroller.getAll);
-    app.get("/api/products/:id", productcontroller.getByCatId);
+    app.get("/api/productbycatid/:id", productcontroller.getByCatId);
     app.delete("/api/sellers/products/:id", productcontroller.deleteProduct);
     app.put("/api/sellers/updateproduct/:id", productcontroller.updateProduct);
 
+    app.get("/api/sellers/requestorders", ordercontroller.requestOrders);
+    app.put("/api/sellers/updateorderstatus/:id", ordercontroller.updateOrderStatus);
+  
+    app.get("/api/sellers/paymenthistory", ordercontroller.paymentHistory);
     app.get("/api/sellers/dashboard", sellercontroller.dashboard);
-    app.get("/api/sellers", sellercontroller.getAll);
-    app.get("/api/sellers/:id", sellercontroller.getById);
+    app.get("/api/sellers/getproducts", sellercontroller.getProductsBySeller);
+   
     app.delete("/api/sellers/:id", sellercontroller.delete);
     app.put("/api/sellers/:id", sellercontroller.put);
 
+   
     app.post("/api/customers", customercontroller.insert);
     app.get("/api/customers", customercontroller.getAll);
     app.get("/api/customers/:id", customercontroller.getByUserId);
@@ -113,28 +120,25 @@ export default function (app) {
     app.get("/api/admin/seller/:id", admincontroller.getSellerById);
     app.get("/api/admin/orders", admincontroller.getAllOrders);
     app.get("/api/admin/orders/:id", admincontroller.getOrderById);
+    app.post("/api/admin/addstaff", admincontroller.addStaff);
     app.get("/api/admin/staff", admincontroller.getAllStaff);
+    app.get("/api/admin/payments", admincontroller.getAllPayments);
 
     app.get("/api/staff/customers", staffcontroller.getAllCustomers);
+    app.get("/api/staff/customers/:id", staffcontroller.getCustomerById);
     app.delete("/api/staff/customer/:id", staffcontroller.deleteCustomerById);
     app.get("/api/staff/sellers", staffcontroller.getAllSellers);
+    app.get("/api/staff/sellers/:id", staffcontroller.getSellerById);
     app.delete("/api/staff/seller/:id", staffcontroller.deleteSellerById);
     app.get("/api/staff/orders", staffcontroller.getAllOrders);
     app.get("/api/staff/orders/:id", staffcontroller.getOrderById);
     app.post("/api/staff/addcategory", categoryController.addCategory);
+    app.put("/api/staff/updatecategory/:id", categoryController.updateCategory);
     app.delete("/api/staff/deletecategory/:id", categoryController.deleteCategory);
-   
+    app.get("/api/staff/payments", staffcontroller.getAllPayments);
 
-    app.post("/api/orders", ordercontroller.insert);
-    app.get("/api/orders", ordercontroller.getAll);
-    app.get("/api/orders/:id", ordercontroller.getById);
-    app.delete("/api/orders/:id", ordercontroller.delete);
-    app.put("/api/orders/:id", ordercontroller.put);
-
-    app.post("/api/cart", cartcontroller.insert);
-    app.get("/api/cart", cartcontroller.getAll);
+    app.get("/api/customers/cart", cartcontroller.getCartByCustomer);
     app.get("/api/cart/:id", cartcontroller.getByCusId);
     app.delete("/api/cart/:id", cartcontroller.delete);
-    app.put("/api/cart/:id", cartcontroller.put);
    
 }

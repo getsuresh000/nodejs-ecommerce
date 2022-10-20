@@ -13,11 +13,7 @@ export default class SellersController{
         result=await this.repoManager.getAll();
         res.send(result); 
     };
-     getById=async (req, res)=>{
-        let result=[];
-         result= await this.repoManager.getById(req.params.id);
-         res.send(result);
-    }
+
 
     insert=async(req,res)=>{
         let result=[];
@@ -41,6 +37,11 @@ export default class SellersController{
     dashboard= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.Dashboard(req,res);
+        res.send(result); 
+    };
+    getProductsBySeller= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getProductsBySeller(req,res);
         res.send(result); 
     };
 }

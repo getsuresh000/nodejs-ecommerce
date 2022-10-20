@@ -37,4 +37,9 @@ export default class CustomerController{
         result= await this.repoManager.Delete(req.params.id);
         res.send("customers deleted successfully");
     }
+    dashboard= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.Dashboard(req,res);
+        res.send(result); 
+    };
 }

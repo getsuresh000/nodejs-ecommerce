@@ -1,10 +1,41 @@
 import Customer from "../../models/CustomerModels.js";
 import sql from '../db/db.js';
+import jwt from "jsonwebtoken";
+import secret from "../../config.js";
+
 
 export default class CustomerManager {
     constructor() {
         this.model = new Customer;
     }
+
+    Dashboard = async(req, res) => {
+        return new Promise((resolve) => {
+        const token =
+          req.body.token || req.query.token || req.headers["x-access-token"];
+      
+        if (!token) {
+         return res.send("A token is required for authentication");
+        }
+       
+        try {
+          const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+          
+          if(decoded.role=='customer' ){
+            return res.send("Welcome  "+decoded.email+"\n"+"Role: "+decoded.role+"\n"+"Id:"+decoded.userid);
+
+          }
+          else{
+            return res.send("Unauthorized");
+          }
+          
+        } catch (err) {
+          return  res.status(401).send("Invalid Token");
+        }
+       
+      });
+       
+      };
 
     getAll = () => {
         return new Promise((resolve) => {

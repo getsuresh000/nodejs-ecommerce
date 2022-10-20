@@ -38,21 +38,7 @@ export default class AuthController{
         res.send(result);
     }
 
-    addtocart=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.addToCart(req,res);
-        res.send(result);
-    }
-    cartDetails=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.cartDetails(req,res);
-        res.send(result);
-    }
-    deleteCart=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.deleteCart(req,res);
-        res.send(result);
-    }
+  
     placeOrder=async(req,res)=>{
         let result=[];
         result= await this.repoManager.placeOrder(req,res);

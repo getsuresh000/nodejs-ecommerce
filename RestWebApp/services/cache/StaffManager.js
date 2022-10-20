@@ -47,6 +47,48 @@ export default class StaffManager {
        
       };
 
+      getCustomerById = async(req, res) => {
+        return new Promise((resolve) => {
+        const token =
+          req.body.token || req.query.token || req.headers["x-access-token"];
+      
+        if (!token) {
+         return res.send("Staff token is required for authentication");
+        }
+       
+        try {
+         
+          const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+          
+          if(decoded.role=='staff'){
+      
+       let command =   `select * from customers where customer_Id="${req.params.id}" `;
+           
+          sql.query(command, (err, rows, fields) => {
+            if (err) {
+              resolve({ error: err });
+            }
+            if(!rows){
+              resolve("data not exists");
+            } else if (rows) {
+              
+            resolve(rows);
+            }
+          }) 
+          }
+         
+          else{
+            return res.send("Unauthorized user");
+          }
+          
+        } catch (err) {
+          return  res.status(401).send("Invalid Token");
+        }
+       
+      });
+       
+      }
+
       deleteCustomerById = async(req, res) => {
         return new Promise((resolve) => {
         const token =
@@ -68,7 +110,7 @@ export default class StaffManager {
             if (err) {
               resolve({ error: err });
             }
-            if(!rows){
+            if(rows.affectedRows==0){
               resolve("data not exists");
             } else if (rows) {
               
@@ -130,8 +172,7 @@ export default class StaffManager {
       });
        
       }
-
-      deleteSellerById = async(req, res) => {
+      getSellerById = async(req, res) => {
         return new Promise((resolve) => {
         const token =
           req.body.token || req.query.token || req.headers["x-access-token"];
@@ -146,7 +187,7 @@ export default class StaffManager {
           
           if(decoded.role=='staff'){
       
-       let command =   `delete from sellers where seller_id="${req.params.id}" `;
+       let command =   `select * from sellers where seller_id="${req.params.id}" `;
            
           sql.query(command, (err, rows, fields) => {
             if (err) {
@@ -156,13 +197,64 @@ export default class StaffManager {
               resolve("data not exists");
             } else if (rows) {
               
-            resolve("Seller deleted");
+            resolve(rows);
             }
           }) 
           }
          
           else{
-            return res.send("Unauthorized");
+            return res.send("Unauthorized user");
+          }
+          
+        } catch (err) {
+          return  res.status(401).send("Invalid Token");
+        }
+       
+      });
+       
+      }
+     
+      deleteSellerById = async(req, res) => {
+        return new Promise((resolve) => {
+        const token =
+          req.body.token || req.query.token || req.headers["x-access-token"];
+      
+        if (!token) {
+         return res.send("Staff token is required for authentication");
+        }
+       
+        try {
+         
+          const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+          
+          if(decoded.role=='staff'){
+            
+          let command =   `SELECT staff_id FROM staff where user_Id="${decoded.userid}" `;
+          sql.query(command, (err, rows, fields) => {
+            if (err) {
+              resolve({ error: err });
+            } else if (rows) {
+              
+              let seller_id=req.params.id;
+              let staff_id=rows[0].staff_id;
+              sql.query(`delete sellers from sellers join staff where sellers.seller_id=? and staff.staff_id=?`, [seller_id,staff_id], (err, rows, fields) => {
+              
+                if (err) {
+                  resolve({ error: err });
+                } 
+                if(rows.affectedRows==0){
+                  resolve("data not exist");
+                }
+                else if (rows) {
+                  resolve("Seller deleted successfully");
+                }
+              });
+            }
+          })
+          }
+         
+          else{
+            return res.send("Unauthorized User");
           }
           
         } catch (err) {
@@ -172,7 +264,7 @@ export default class StaffManager {
       });
        
       };
-    
+
       getAllOrders = async(req, res) => {
         return new Promise((resolve) => {
         const token =
@@ -256,6 +348,49 @@ export default class StaffManager {
       });
        
       };
+
+          
+    getAllPayments = async(req, res) => {
+      return new Promise((resolve) => {
+      const token =
+        req.body.token || req.query.token || req.headers["x-access-token"];
+    
+      if (!token) {
+       return res.send("Staff token is required for authentication");
+      }
+     
+      try {
+       
+        const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+        
+        if(decoded.role=='staff'){
+    
+     let command =   `select * from payments `;
+         
+        sql.query(command, (err, rows, fields) => {
+          if (err) {
+            resolve({ error: err });
+          }
+          if(!rows){
+            resolve("data not exists");
+          } else if (rows) {
+            
+          resolve(rows);
+          }
+        }) 
+        }
+       
+        else{
+          return res.send("Unauthorized user");
+        }
+        
+      } catch (err) {
+        return  res.status(401).send("Invalid Token");
+      }
+     
+    });
+     
+    };
 /*
     getById = function (id) {
         return new Promise(resolve => {

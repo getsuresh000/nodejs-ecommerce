@@ -22,6 +22,7 @@ export default class ProductManager {
           const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
           
           if(decoded.role=='seller'){
+           
           let data=req.body;
           let command =   `SELECT seller_id FROM sellers where user_Id="${decoded.userid}" `;
           sql.query(command, (err, rows, fields) => {

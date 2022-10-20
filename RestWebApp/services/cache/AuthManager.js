@@ -86,293 +86,7 @@ updatePassword = async(req, res) => {
    
 
 
-addToCart = async(req, res) => {
-  return new Promise((resolve) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
 
-  if (!token) {
-   return res.send("A token is required for authentication");
-  }
- 
-  try {
-   
-    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
-    
-    if(decoded.role=='customer'){
-    let data=req.body;
-    let command =   `SELECT customer_Id FROM customers where user_Id="${decoded.userid}" `;
-    sql.query(command, (err, rows, fields) => {
-      if (err) {
-        resolve({ error: err });
-      } else if (rows) {
-        let customer_id=rows[0].customer_Id;
-        
-        let command = `INSERT INTO cart (customer_id, product_id ,quantity)
-        VALUES("${customer_id}","${data.product_id}","${data.quantity}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ error: err });
-          } else if (rows) {
-            resolve("added successfully" );
-          }
-        });
-      }
-    })
-    }
-   
-    else{
-      return res.send("Unauthorized");
-    }
-    
-  } catch (err) {
-    return  res.status(401).send("Invalid Token");
-  }
- 
-});
- 
-};
-   
- 
-cartDetails = async(req, res) => {
-  return new Promise((resolve) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
-
-  if (!token) {
-   return res.send("A token is required for authentication");
-  }
- 
-  try {
-   
-    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
-    
-    if(decoded.role=='customer'){
-    let data=req.body;
-    let command =   `SELECT id,cart.customer_id,product_id,quantity 
-    FROM cart  
-    JOIN customers
-    ON cart.customer_id = customers.customer_Id where customers.user_Id="${decoded.userid}" `;
-    sql.query(command, (err, rows, fields) => {
-      if (err) {
-        resolve({ error: err });
-      } else if (rows) {
-        
-      resolve(rows);
-      }
-    })
-    }
-   
-    else{
-      return res.send("Unauthorized");
-    }
-    
-  } catch (err) {
-    return  res.status(401).send("Invalid Token");
-  }
- 
-});
- 
-};
- 
-deleteCart = async(req, res) => {
-  return new Promise((resolve) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
-
-  if (!token) {
-   return res.send("A token is required for authentication");
-  }
- 
-  try {
-   
-    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
-    
-    if(decoded.role=='customer'){
-
- let command =   `delete cart from cart JOIN customers
-    ON cart.customer_id = customers.customer_Id where customers.user_Id="${decoded.userid}" and cart.id="${req.params.id}" `;
-     
-    sql.query(command, (err, rows, fields) => {
-      if (err) {
-        resolve({ error: err });
-      }
-      if(!rows){
-        resolve("data not exists");
-      } else if (rows) {
-        
-      resolve("cart deleted successfully");
-      }
-    }) 
-    }
-   
-    else{
-      return res.send("Unauthorized");
-    }
-    
-  } catch (err) {
-    return  res.status(401).send("Invalid Token");
-  }
- 
-});
- 
-};
-
-
-
-placeOrder = async(req, res) => {
-  return new Promise((resolve) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
-
-  if (!token) {
-   return res.send("A token is required for authentication");
-  }
- 
-  try {
-   
-    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
-    
-    if(decoded.role=='customer'){
-    let data=req.body;
-    let id=req.params.id;
-    let command =   `SELECT *
-    FROM cart  
-    JOIN customers
-    ON cart.customer_id = customers.customer_Id where customers.user_Id="${decoded.userid}" and cart.id="${id}" `;
-    sql.query(command, (err, rows, fields) => {
-      if (err) {
-        resolve({ error: err });
-      } if(rows==0){
-        resolve("data not exists for current user");
-      }else if (rows) {
-        let cart_id=rows[0].id;
-        let customer_id=rows[0].customer_id;
-        let product_id=rows[0].product_id;
-        let quantity=rows[0].quantity;
-        let command = `INSERT INTO orders (cart_id,product_id,quantity,customer_id,status)
-        VALUES("${cart_id}","${product_id}","${quantity}","${customer_id}","${data.status}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ error: err });
-          } else if (rows) {
-            resolve("order added successfully" );
-          }
-        });
-      
-      }
-    })
-    }
-   
-    else{
-      return res.send("Unauthorized");
-    }
-    
-  } catch (err) {
-    return  res.status(401).send("Invalid Token");
-  }
- 
-});
- 
-};
-
- 
-orderDetails = async(req, res) => {
-  return new Promise((resolve) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
-
-  if (!token) {
-   return res.send("A token is required for authentication");
-  }
- 
-  try {
-   
-    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
-    
-    if(decoded.role=='customer'){
-    let data=req.body;
-    let command =   `SELECT order_id,product_id,quantity,orders.customer_id,status,name,mobile,location
-    FROM orders  
-    JOIN customers
-    ON orders.customer_id = customers.customer_Id where customers.user_Id="${decoded.userid}" `;
-    sql.query(command, (err, rows, fields) => {
-      if (err) {
-        resolve({ error: err });
-      } else if (rows) {
-        
-      resolve(rows);
-      }
-    })
-    }
-   
-    else{
-      return res.send("Unauthorized");
-    }
-    
-  } catch (err) {
-    return  res.status(401).send("Invalid Token");
-  }
- 
-});
- 
-};
-
-
-addPayment = async(req, res) => {
-  return new Promise((resolve) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
-
-  if (!token) {
-   return res.send("A token is required for authentication");
-  }
- 
-  try {
-   
-    const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
-    
-    if(decoded.role=='customer'){
-    let data=req.body;
-    let id=req.params.id;
-    let command =   `SELECT *
-    FROM orders  
-    JOIN customers
-    ON orders.customer_id = customers.customer_Id where customers.user_Id="${decoded.userid}" and orders.order_id="${id}" `;
-    sql.query(command, (err, rows, fields) => {
-      if (err) {
-        resolve({ error: err });
-      } if(rows==0){
-        resolve("data not exists for current user");
-      }else if (rows) {
-        
-        let order_id=rows[0].order_id;
-      
-        let command = `INSERT INTO payments (order_id,amount,paymentmode)
-        VALUES("${order_id}","${data.amount}","${data.paymentmode}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ error: err });
-          } else if (rows) {
-            resolve("payment added successfully" );
-          }
-        });
-      
-      }
-    })
-    }
-   
-    else{
-      return res.send("Unauthorized");
-    }
-    
-  } catch (err) {
-    return  res.status(401).send("Invalid Token");
-  }
- 
-});
- 
-};
 
   Register = async (req, res)=> {
     // Our register logic starts here
@@ -406,7 +120,7 @@ addPayment = async(req, res) => {
           if (err) {
             resolve({ message: err });
           } else if (rows) {
-            resolve({ message: "Registered Successfully" });
+            resolve({ message: "Customer Registered Successfully" });
            
           }
         })
@@ -417,22 +131,12 @@ addPayment = async(req, res) => {
           if (err) {
             resolve({ message: err });
           } else if (rows) {
-            resolve({ message: "Registered Successfully" });
+            resolve({ message: "Seller Registered Successfully" });
            
           }
         })
       }
-      if (data.role == 'staff') {
-        let command = `call insert_user_staff("${data.email}","${epassword}","${data.role}","${data.name}","${data.mobile}","${data.location}")`;
-        sql.query(command, (err, rows, fields) => {
-          if (err) {
-            resolve({ message: err });
-          } else if (rows) {
-            resolve({ message: "Registered Successfully" });
-           
-          }
-        })
-      }
+
       // return new user
     }
     })
@@ -472,13 +176,15 @@ Login = async (req,res) => {
             role:data.role,
           };
           let accessToken = jwt.sign(userData, secret.ACCESS_TOKEN_SECRET, {
-            expiresIn: 72 * 3600,
+            expiresIn: 72*3600,
           });
           
         res.send(accessToken);
-        console.log(accessToken);
-        }
        
+        }
+       else{
+        res.send("Incorrect Password" );
+       }
         
       }
       else {
@@ -506,15 +212,15 @@ Logout = async(req, res) => {
     const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
     
     if(decoded.role=='customer' || decoded.role=='seller' || decoded.role=='admin' || decoded.role=='staff'){
-     
-    jwt.sign(token, secret.ACCESS_TOKEN_SECRET, { expiresIn: 1 } , (logout, err) => {
-      if (logout) {
-      return res.send({msg : 'You have been Logged Out' });
-      } else {
-      return res.send({msg:'Error'});
-      }
-      });
-    }
+      jwt.sign(decoded, "" ,{ expiresIn: 1 } , (logout, err) => {
+        if (logout) {
+          
+        res.send({msg : 'You have been Logged Out' });
+        } else {
+        res.send({msg:'Error'});
+        }
+        });
+    }  
     else{
       return res.send({msg:'Unauthorized'});
     }

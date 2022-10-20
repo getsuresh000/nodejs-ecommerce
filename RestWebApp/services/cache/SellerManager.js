@@ -35,7 +35,93 @@ export default class SellerManager {
       });
        
       };
+     
+      
+    getProductsBySeller = async(req, res) => {
+        return new Promise((resolve) => {
+          const token =
+          req.body.token || req.query.token || req.headers["x-access-token"];
+      
+        if (!token) {
+         return res.send("Seller token is required for authentication");
+        }
        
+        try {
+         
+          const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+          
+          if(decoded.role=='seller'){
+          
+   
+              let command = `select product_id,title,description,quantity,price,category_id,products.seller_id from products join sellers where products.seller_id=sellers.seller_id and sellers.user_Id="${decoded.userid}" `;
+              sql.query(command, (err, rows, fields) => {
+                if (err) {
+                  resolve({ error: err });
+                } else if (rows) {
+                 
+                  resolve(rows);
+                }
+              });
+            }
+         
+          
+         
+          else{
+            return res.send("Unauthorized User");
+          }
+          
+        } catch (err) {
+          return  res.status(401).send("Invalid Token");
+        } 
+       
+      });
+       
+      };
+     
+     
+      
+      getOrdersBySeller = async(req, res) => {
+        return new Promise((resolve) => {
+          const token =
+          req.body.token || req.query.token || req.headers["x-access-token"];
+      
+        if (!token) {
+         return res.send("Seller token is required for authentication");
+        }
+       
+        try {
+         
+          const decoded = jwt.verify(token, secret.ACCESS_TOKEN_SECRET);
+          
+          if(decoded.role=='seller'){
+          
+   
+              let command = `select order_id,customer_id,product_id,quantity,status,orders.created_at from orders join sellers where orders.seller_id=sellers.seller_id and sellers.user_Id="${decoded.userid}" `;
+              sql.query(command, (err, rows, fields) => {
+                if (err) {
+                  resolve({ error: err });
+                } else if (rows) {
+                 
+                  resolve(rows);
+                }
+              });
+            }
+         
+          
+         
+          else{
+            return res.send("Unauthorized User");
+          }
+          
+        } catch (err) {
+          return  res.status(401).send("Invalid Token");
+        } 
+       
+      });
+       
+      };
+     
+
     getAll = () => {
         return new Promise((resolve) => {
             let command = `SELECT * FROM ${this.model.table_name};`;

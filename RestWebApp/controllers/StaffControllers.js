@@ -13,6 +13,12 @@ export default class StaffController{
         res.send(result); 
      
     };
+    getCustomerById= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getCustomerById(req,res);
+        res.send(result); 
+     
+    };
     deleteCustomerById= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.deleteCustomerById(req,res);
@@ -22,6 +28,12 @@ export default class StaffController{
     getAllSellers= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.getAllSellers(req,res);
+        res.send(result); 
+     
+    };
+    getSellerById= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getSellerById(req,res);
         res.send(result); 
      
     };
@@ -44,6 +56,13 @@ export default class StaffController{
          res.send(result);
          
     }
+
+    getAllPayments= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getAllPayments(req,res);
+        res.send(result); 
+     
+    };
 
     insert=async(req,res)=>{
         let result=[];

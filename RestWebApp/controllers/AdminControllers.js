@@ -31,6 +31,12 @@ export default class AdminController{
         res.send(result); 
      
     };
+    addStaff= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.addStaff(req,res);
+        res.send(result); 
+     
+    };
     getAllStaff= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.getAllStaff(req,res);
@@ -46,6 +52,12 @@ export default class AdminController{
     getOrderById= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.getOrderById(req,res);
+        res.send(result); 
+     
+    };
+    getAllPayments= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getAllPayments(req,res);
         res.send(result); 
      
     };

@@ -7,6 +7,32 @@ export default class CartController{
         this.repoManager=cartMgr; 
 
     }
+
+    getCartByCustomer= async(req, res)=>{  
+        let result=[];
+        result=await this.repoManager.getCartByCustomer(req,res);
+        res.send(result); 
+    };
+    addtocart=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.addToCart(req,res);
+        res.send(result);
+    }
+    cartDetails=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.cartDetails(req,res);
+        res.send(result);
+    }
+    updateCart=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.updateCart(req,res);
+        res.send(result);
+    }
+    deleteCart=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.deleteCart(req,res);
+        res.send(result);
+    }
     getAll= async(req, res)=>{  
         let result=[];
         result=await this.repoManager.getAll();
@@ -25,11 +51,7 @@ export default class CartController{
         result= await this.repoManager.Insert(req);
         res.send(result.data);
     }
-    put=async(req,res)=>{
-        let result=[];
-        result= await this.repoManager.Update(req,req.params.id);
-        res.send(result.data);
-    }
+
 
 
 

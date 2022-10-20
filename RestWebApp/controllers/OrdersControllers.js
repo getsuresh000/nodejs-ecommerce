@@ -1,41 +1,42 @@
-
 //Controller
-export default class OrderController{
+
+
+export default class orderController{
     //constructor Dependency Injection
-    constructor(ordMgr){
+    constructor(orderMgr){
     
-        this.repoManager=ordMgr; 
+        this.repoManager=orderMgr; 
 
     }
-    getAll= async(req, res)=>{  
+  
+    placeOrder=async(req,res)=>{
         let result=[];
-        result=await this.repoManager.getAll();
-        res.send(result.data); 
-     
-    };
-     getById=async (req, res)=>{
-        let result=[];
-         result= await this.repoManager.getById(req.params.id);
-         res.send(result.data);
-         
+        result= await this.repoManager.placeOrder(req,res);
+        res.send(result);
     }
-
-    insert=async(req,res)=>{
+    orderDetails=async(req,res)=>{
         let result=[];
-        result= await this.repoManager.Insert(req);
-        res.send(result.data);
+        result= await this.repoManager.orderDetails(req,res);
+        res.send(result);
     }
-    put=async(req,res)=>{
+    requestOrders=async(req,res)=>{
         let result=[];
-        result= await this.repoManager.Update(req,req.params.id);
-        res.send(result.data);
+        result= await this.repoManager.requestOrders(req,res);
+        res.send(result);
     }
-
-
-
-    delete=async(req,res)=>{
+  updateOrderStatus = async(req, res) => {
+    let result=[];
+    result= await this.repoManager.updateOrderStatus(req,res);
+    res.send(result);
+}
+    addPayment=async(req,res)=>{
         let result=[];
-        result= await this.repoManager.Delete(req.params.id);
-        res.send(result.data);
+        result= await this.repoManager.addPayment(req,res);
+        res.send(result);
+    }
+    paymentHistory = async(req, res) => {
+        let result=[];
+        result= await this.repoManager.paymentHistory(req,res);
+        res.send(result);
     }
 }

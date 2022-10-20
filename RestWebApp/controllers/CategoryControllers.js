@@ -12,6 +12,11 @@ export default class CategoryController{
         result= await this.repoManager.addCategory(req,res);
         res.send(result);
     };
+    updateCategory=async(req,res)=>{
+        let result=[];
+        result= await this.repoManager.updateCategory(req,res);
+        res.send(result);
+    };
     deleteCategory=async(req,res)=>{
         let result=[];
         result= await this.repoManager.deleteCategory(req,res);
